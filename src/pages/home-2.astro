@@ -1,0 +1,30 @@
+---
+// HOME 2: a test version of the homepage.
+// Differences from the main homepage:
+//   1. The hero is the silent video (it used to be in the About section).
+//   2. The pink-shirts group photo moves into the About section, replacing the video.
+//   3. The two newborn slides are not used here.
+// Everything else is the same. Linked from the footer only, and kept out of search results.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroVideo from "../components/sections/HeroVideo.astro";
+import About from "../components/sections/About.astro";
+import WhyUs from "../components/sections/WhyUs.astro";
+import Services from "../components/sections/Services.astro";
+import Insurance from "../components/sections/Insurance.astro";
+import Providers from "../components/sections/Providers.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
+import Blog from "../components/sections/Blog.astro";
+import Contact from "../components/sections/Contact.astro";
+---
+
+<BaseLayout title="Home 2 | Martin, Lee & Page OB GYN Memphis, TN" noindex overVideo>
+  <HeroVideo />
+  <About media="image" />
+  <WhyUs />
+  <Services />
+  <Insurance />
+  <Providers />
+  <Testimonials />
+  <Blog />
+  <Contact />
+</BaseLayout>

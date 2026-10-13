@@ -4,9 +4,16 @@ import { site } from "../../data/site";
 import Icon from "../ui/Icon.astro";
 import MobileMenu from "../islands/MobileMenu";
 import { stock } from "../../data/images";
+interface Props { overVideo?: boolean }
+const { overVideo = false } = Astro.props;
 ---
 
-<div class="hidden bg-lagoon-950 text-lagoon-100 lg:block">
+<div
+  class={overVideo ? "sticky top-0 z-50 lg:fixed lg:inset-x-0" : "contents"}
+  {...(overVideo ? { "data-over-video": "", "data-solid": "false" } : {})}
+>
+
+<div data-topbar class="hidden bg-lagoon-950 text-lagoon-100 lg:block">
   <div class="wrap flex h-10 items-center justify-between text-[0.8rem] tracking-wide">
     <p class="flex items-center gap-2">
       <Icon name="clock" class="h-4 w-4 text-lotus-400" />
@@ -30,10 +37,10 @@ import { stock } from "../../data/images";
   </div>
 </div>
 
-<header class="sticky top-0 z-50 border-b border-lagoon-100/70 bg-ivory/90 backdrop-blur-md">
+<header class={`${overVideo ? "" : "sticky top-0 z-50"} border-b border-lagoon-100/70 bg-ivory/90 backdrop-blur-md transition-colors duration-300`}>
   <div class="wrap flex h-24 items-center justify-between gap-6">
     <a href="/" aria-label={`${site.name} home`} class="shrink-0">
-      <img src="/images/logo.png" alt="Martin, Lee & Page OB GYN" width="380" height="214" class="h-[4.25rem] w-auto" />
+      <img data-logo src={overVideo ? "/images/logo-clean.png" : "/images/logo.png"} alt="Martin, Lee & Page OB GYN" width={overVideo ? 900 : 380} height={overVideo ? 369 : 214} class={overVideo ? "h-[3.75rem] w-auto" : "h-[4.25rem] w-auto"} />
     </a>
 
     <nav aria-label="Main" class="hidden xl:block">
@@ -41,6 +48,7 @@ import { stock } from "../../data/images";
         {navLinks.map((item) => (
           <li class={item.mega ? "group" : "group relative"}>
             <a
+              data-top-link
               href={item.href}
               class={`flex items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.95rem] font-bold text-ink transition-colors hover:text-lotus-600 ${item.mega ? "min-h-[6rem]" : "min-h-11"}`}
               {...(item.children ? { "aria-haspopup": "true" } : {})}
@@ -117,3 +125,31 @@ import { stock } from "../../data/images";
     </div>
   </div>
 </header>
+</div>
+
+{overVideo && (
+  <>
+    <style is:global set:html={`
+      @media (min-width: 1024px) {
+        [data-over-video][data-solid="false"] [data-topbar] { background: transparent; border-bottom: 1px solid rgb(255 255 255 / .18); color: #fff; }
+        [data-over-video][data-solid="false"] header { background: transparent; border-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
+        [data-over-video][data-solid="false"] [data-logo] { filter: drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 5px rgb(255 255 255 / .85)); }
+        [data-over-video][data-solid="false"] [data-top-link] { color: #fff; text-shadow: 0 1px 8px rgb(0 0 0 / .45); }
+        [data-over-video][data-solid="false"] [data-top-link]:hover { color: var(--color-lotus-200); }
+        [data-over-video][data-solid="false"] header a[aria-label="Facebook"],
+        [data-over-video][data-solid="false"] header a[aria-label="Instagram"] { color: #fff; }
+        [data-over-video][data-solid="true"] [data-topbar] { display: none; }
+        [data-over-video][data-solid="true"] header { box-shadow: 0 6px 24px rgb(7 40 48 / .08); }
+      }
+      [data-over-video] [data-logo] { transition: filter .3s; }
+    `}></style>
+    <script is:inline set:html={`
+      (function () {
+        var el = document.querySelector("[data-over-video]");
+        if (!el) return;
+        function u() { el.setAttribute("data-solid", window.scrollY > 24 ? "true" : "false"); }
+        u(); window.addEventListener("scroll", u, { passive: true });
+      })();
+    `}></script>
+  </>
+)}

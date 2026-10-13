@@ -1,0 +1,104 @@
+---
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+}
+const {
+  eyebrow = "Memphis, Tennessee",
+  title = "Care that truly listens",
+  text = "Board-certified OB-GYNs for every stage of life.",
+} = Astro.props;
+---
+
+<!--
+  HOME 2 HERO. Full-width silent video (same file as the old About video):
+    /public/videos/about-ultrasound.webm  (used first)
+    /public/videos/about-ultrasound.mp4   (Safari fallback)
+    /public/images/about-ultrasound-poster.jpg  (shown while loading)
+  Tip: for the sharpest result, export a 1920x1080 version from Higgsfield.
+-->
+<section
+  aria-label="Welcome"
+  class="relative isolate w-full overflow-hidden bg-lagoon-950 text-white"
+>
+  <div class="relative aspect-video w-full lg:aspect-auto lg:h-[100svh] lg:max-h-[920px] lg:min-h-[640px]">
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      poster="/images/hero-ultrasound-poster.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+      tabindex="-1"
+      data-hero-video>
+      <source src="/videos/hero-ultrasound.webm" type="video/webm" />
+      <source src="/videos/hero-ultrasound.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 hidden bg-gradient-to-r from-lagoon-950/85 via-lagoon-950/40 to-transparent lg:block" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 top-0 hidden h-56 bg-gradient-to-b from-black/55 to-transparent lg:block" aria-hidden="true"></div>
+    <div class="absolute inset-0 hidden pt-[8.5rem] lg:flex lg:items-center">
+      <div class="wrap">
+        <div class="max-w-xl">
+          <p class="mb-5 flex items-center gap-3 text-[0.8rem] font-bold uppercase tracking-[0.25em] text-lotus-200">
+            <span class="h-px w-10 bg-lotus-400" aria-hidden="true"></span>{eyebrow}
+          </p>
+          <h1 class="font-display text-[clamp(2.25rem,5vw,4.25rem)] font-medium leading-[1.05]">{title}</h1>
+          <p class="mt-6 max-w-md text-lg text-white/90">{text}</p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="/#contact" class="btn btn-primary btn-beam">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+            <a href="/#providers" class="btn btn-ghost">Meet Our Providers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      hidden
+      data-hero-toggle
+      aria-label="Pause video"
+      class="absolute bottom-5 right-5 grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-lagoon-950/40 text-white backdrop-blur transition hover:bg-white hover:text-lagoon-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:bottom-8 sm:right-8">
+      <span data-icon-pause><Icon name="pause" class="h-4 w-4" /></span>
+      <span data-icon-play hidden><Icon name="play" class="h-4 w-4" /></span>
+    </button>
+  </div>
+
+  <!-- Phone and tablet: text sits below the video -->
+  <div class="wrap py-12 lg:hidden">
+    <p class="mb-4 flex items-center gap-3 text-[0.8rem] font-bold uppercase tracking-[0.25em] text-lotus-200">
+      <span class="h-px w-10 bg-lotus-400" aria-hidden="true"></span>{eyebrow}
+    </p>
+    <h1 class="font-display text-4xl font-medium leading-[1.05]">{title}</h1>
+    <p class="mt-5 max-w-md text-lg text-white/90">{text}</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/#contact" class="btn btn-primary btn-beam">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+      <a href="/#providers" class="btn btn-ghost">Meet Our Providers</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
+  const btn = document.querySelector<HTMLButtonElement>("[data-hero-toggle]");
+  if (video && btn) {
+    const iconPause = btn.querySelector<HTMLElement>("[data-icon-pause]")!;
+    const iconPlay = btn.querySelector<HTMLElement>("[data-icon-play]")!;
+    const sync = () => {
+      iconPause.hidden = video.paused;
+      iconPlay.hidden = !video.paused;
+      btn.setAttribute("aria-label", video.paused ? "Play video" : "Pause video");
+    };
+    video.addEventListener("loadeddata", () => {
+      btn.hidden = false;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) video.pause();
+      sync();
+    });
+    video.addEventListener("play", sync);
+    video.addEventListener("pause", sync);
+    btn.addEventListener("click", () => (video.paused ? video.play() : video.pause()));
+  }
+</script>

@@ -5,6 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://www.mlpobgyn.com",
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({ filter: (page) => !page.includes("/home-2") })],
   vite: { plugins: [tailwindcss()] },
 });

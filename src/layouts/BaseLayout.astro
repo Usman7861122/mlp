@@ -12,8 +12,11 @@ import { site } from "../data/site";
 interface Props {
   title?: string;
   description?: string;
+  /** Keep a page out of search results (used for the Home 2 test page). */
+  noindex?: boolean;
+  overVideo?: boolean;
 }
-const { title = `${site.name} | Memphis, TN`, description = site.description } = Astro.props;
+const { title = `${site.name} | Memphis, TN`, description = site.description, noindex = false, overVideo = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,6 +25,7 @@ const { title = `${site.name} | Memphis, TN`, description = site.description } =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#0b3a47" />
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
@@ -35,7 +39,7 @@ const { title = `${site.name} | Memphis, TN`, description = site.description } =
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:shadow-lg">
       Skip to content
     </a>
-    <Header />
+    <Header overVideo={overVideo} />
     <main id="main"><slot /></main>
     <Footer />
     <CookieConsent client:idle />

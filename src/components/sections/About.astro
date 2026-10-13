@@ -2,6 +2,13 @@
 import { site } from "../../data/site";
 import Reveal from "../islands/Reveal";
 import Icon from "../ui/Icon.astro";
+import { stock } from "../../data/images";
+
+interface Props {
+  /** "video" = silent ultrasound video (default). "image" = group photo (used on Home 2). */
+  media?: "video" | "image";
+}
+const { media = "video" } = Astro.props;
 ---
 
 <section id="about" class="section overflow-hidden bg-ivory">
@@ -16,6 +23,19 @@ import Icon from "../ui/Icon.astro";
             /public/images/about-ultrasound-poster.jpg  (shown while loading)
           Original Higgsfield file is kept in /source-assets/ (not published).
         -->
+        {media === "image" ? (
+          <div class="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-lagoon-900 shadow-2xl shadow-lagoon-900/15">
+            <img
+              src={stock.hero1}
+              alt="Five smiling women wearing pink shirts with ribbons, standing together outdoors"
+              width="1200"
+              height="1200"
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover"
+              style="object-position: 50% 30%"
+            />
+          </div>
+        ) : (
         <div class="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-lagoon-900 shadow-2xl shadow-lagoon-900/15" data-about-video-box>
           <video
             class="absolute inset-0 h-full w-full object-cover"
@@ -40,6 +60,7 @@ import Icon from "../ui/Icon.astro";
             <span data-icon-play hidden><Icon name="play" class="h-5 w-5" /></span>
           </button>
         </div>
+        )}
         <a
           href={site.googleProfile}
           target="_blank"
