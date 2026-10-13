@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens ---------- */
+@theme {
+  --font-display: "Playfair Display Variable", "Playfair Display", Georgia, serif;
+  --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
+
+  /* Lagoon = deep teal from the logo */
+  --color-lagoon-50: #f0f8fa;
+  --color-lagoon-100: #d9eef2;
+  --color-lagoon-200: #b4dde5;
+  --color-lagoon-400: #4aa5b8;
+  --color-lagoon-600: #1a7c93;
+  --color-lagoon-700: #146579;
+  --color-lagoon-800: #0f4e5e;
+  --color-lagoon-900: #0b3a47;
+  --color-lagoon-950: #062630;
+
+  /* Lotus = pink from the logo */
+  --color-lotus-50: #fff4f9;
+  --color-lotus-100: #fde3ef;
+  --color-lotus-200: #fbc6de;
+  --color-lotus-400: #f472a9;
+  --color-lotus-500: #ec4f95;
+  --color-lotus-600: #c4296f;
+  --color-lotus-700: #a01f5a;
+
+  --color-ivory: #fdfaf7;
+  --color-ink: #12303a;
+  --color-ink-soft: #4a626b;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-lotus-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .wrap { padding-inline: 2rem; }
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-lotus-600);
+  }
+  .section { padding-block: 5rem; }
+  @media (min-width: 1024px) { .section { padding-block: 7.5rem; } }
+
+  .btn {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    transition: background-color 0.3s var(--ease-luxe), color 0.3s var(--ease-luxe),
+      transform 0.3s var(--ease-luxe), box-shadow 0.3s var(--ease-luxe);
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--color-lotus-600); color: #fff; }
+  .btn-primary:hover { background: var(--color-lotus-700); box-shadow: 0 10px 30px -10px rgb(196 41 111 / 0.6); }
+  .btn-light { background: #fff; color: var(--color-lagoon-900); }
+  .btn-light:hover { background: var(--color-lotus-50); }
+  .btn-ghost { border: 1px solid rgb(255 255 255 / 0.6); color: #fff; }
+  .btn-ghost:hover { background: rgb(255 255 255 / 0.12); }
+  .btn-outline { border: 1px solid var(--color-lagoon-600); color: var(--color-lagoon-700); }
+  .btn-outline:hover { background: var(--color-lagoon-600); color: #fff; }
+}
+
+/* Animated border light for "Book a Visit" buttons (add class .btn-beam) */
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.btn-beam {
+  position: relative;
+  isolation: isolate;
+}
+.btn-beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    transparent 250deg,
+    rgb(255 255 255 / 0.15) 290deg,
+    #fff 355deg,
+    transparent 360deg
+  );
+  /* show only the 2px ring, not the fill */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  animation: beam-spin 4s linear infinite;
+}
+@keyframes beam-spin {
+  to { --beam-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-beam::after { animation: none; opacity: 0; }
+}
+
+/* Long-form legal pages */
+@layer components {
+  .legal-prose { color: var(--color-ink-soft); font-size: 1.0625rem; line-height: 1.75; }
+  .legal-prose h2 { margin-top: 3rem; margin-bottom: 1rem; scroll-margin-top: 8rem; font-family: var(--font-display); font-size: 1.875rem; line-height: 1.2; color: var(--color-lagoon-900); }
+  .legal-prose h2:first-child { margin-top: 0; }
+  .legal-prose h3 { margin-top: 1.75rem; margin-bottom: 0.5rem; font-weight: 700; font-size: 1.125rem; color: var(--color-lagoon-900); }
+  .legal-prose p { margin-top: 1rem; }
+  .legal-prose ul, .legal-prose ol { margin-top: 1rem; padding-left: 1.25rem; }
+  .legal-prose ul { list-style: disc; }
+  .legal-prose ol { list-style: decimal; }
+  .legal-prose li { margin-top: 0.5rem; padding-left: 0.25rem; }
+  .legal-prose li::marker { color: var(--color-lotus-600); }
+  .legal-prose a { color: var(--color-lotus-700); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .legal-prose a:hover { color: var(--color-lagoon-700); }
+  .legal-prose strong { color: var(--color-ink); }
+  .legal-prose table { width: 100%; margin-top: 1.25rem; border-collapse: collapse; font-size: 0.975rem; }
+  .legal-prose th, .legal-prose td { border: 1px solid var(--color-lagoon-100); padding: 0.75rem 1rem; text-align: left; vertical-align: top; }
+  .legal-prose th { background: var(--color-lagoon-50); color: var(--color-lagoon-900); }
+  .legal-callout { margin-top: 1.5rem; border-radius: 1.25rem; background: var(--color-lotus-50); padding: 1.25rem 1.5rem; color: var(--color-ink); }
+}

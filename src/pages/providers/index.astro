@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import ProviderCard from "../../components/ui/ProviderCard.astro";
+import Icon from "../../components/ui/Icon.astro";
+import Insurance from "../../components/sections/Insurance.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { physicians, practitioners } from "../../data/providers";
+---
+
+<BaseLayout title="Meet the Providers | Martin, Lee & Page OB GYN" description="Meet the board-certified physicians, nurse practitioners and physician assistant at Martin, Lee & Page OB GYN in Memphis, TN.">
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span class="text-white">Meet the Providers</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">Our Providers</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">The people who <em class="font-display text-lotus-300">care for you</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">Board-certified physicians and experienced practitioners, all women, all dedicated to your health.</p>
+    </div>
+  </section>
+
+  <section class="section overflow-x-clip bg-lagoon-50">
+    <div class="wrap">
+      <Reveal client:visible className="max-w-2xl">
+        <p class="eyebrow">Physicians</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900">Martin, Lee &amp; Page</h2>
+        <p class="mt-4 text-lg text-ink-soft">Our three founding OB-GYNs, board certified and Fellows of the American College of Obstetricians and Gynecologists.</p>
+      </Reveal>
+      <ul class="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {physicians.map((p, i) => (
+          <li><Reveal client:visible delay={i * 0.1}><ProviderCard provider={p} /></Reveal></li>
+        ))}
+      </ul>
+
+      <Reveal client:visible className="mt-24 max-w-2xl">
+        <p class="eyebrow">Advanced practitioners</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900">Nurse practitioners and physician assistant</h2>
+        <p class="mt-4 text-lg text-ink-soft">Experienced clinicians who work alongside our physicians to give you time, answers and care that feels personal.</p>
+      </Reveal>
+      <ul class="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {practitioners.map((p, i) => (
+          <li><Reveal client:visible delay={i * 0.1}><ProviderCard provider={p} /></Reveal></li>
+        ))}
+      </ul>
+
+      <div class="mt-20 text-center">
+        <a href="/about" class="btn btn-outline">About our practice <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </div>
+    </div>
+  </section>
+
+  <Insurance />
+  <Contact />
+</BaseLayout>

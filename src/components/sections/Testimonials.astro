@@ -1,0 +1,19 @@
+---
+import { testimonials } from "../../data/testimonials";
+import { site } from "../../data/site";
+import TestimonialSlider from "../islands/TestimonialSlider";
+import Reveal from "../islands/Reveal";
+---
+
+<section id="testimonials" class="section relative overflow-hidden bg-lotus-50">
+  <div class="wrap">
+    <Reveal client:visible className="mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Testimonials</p>
+      <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Words from our <em class="font-display text-lotus-600">patients</em></h2>
+      <p class="mt-4 text-ink-soft">Rated {site.rating.score} out of 5 from {site.rating.count} reviews on Google, Facebook, Vitals and Healthgrades.</p>
+    </Reveal>
+    <div class="mt-14">
+      <TestimonialSlider client:visible items={testimonials} />
+    </div>
+  </div>
+</section>

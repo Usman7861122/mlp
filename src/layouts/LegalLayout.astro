@@ -1,0 +1,72 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Icon from "../components/ui/Icon.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  accent: string;
+  lead: string;
+  updated: string;
+  /** Table of contents: id must match an <h2 id> in the page. */
+  toc: { id: string; label: string }[];
+}
+const { title, description, heading, accent, lead, updated, toc } = Astro.props;
+
+const related = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms and Conditions", href: "/terms-and-conditions" },
+  { label: "HIPAA Notice of Privacy Practices", href: "/hipaa-notice" },
+  { label: "Accessibility Statement", href: "/accessibility" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+];
+const path = Astro.url.pathname.replace(/\/$/, "");
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-24">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span class="text-white">{heading} {accent}</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">Legal</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">{heading} <em class="font-display text-lotus-300">{accent}</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">{lead}</p>
+      <p class="mt-6 text-sm text-lagoon-100/70">Last updated: {updated}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-[17rem_1fr] lg:gap-16">
+      <aside class="lg:sticky lg:top-32 lg:self-start" aria-label="On this page">
+        <p class="eyebrow">On this page</p>
+        <ul class="mt-4 space-y-1 border-l border-lagoon-100">
+          {toc.map((t) => (
+            <li><a href={`#${t.id}`} class="-ml-px inline-flex min-h-11 items-center border-l-2 border-transparent pl-4 text-sm text-ink-soft transition hover:border-lotus-600 hover:text-lagoon-900">{t.label}</a></li>
+          ))}
+        </ul>
+        <p class="eyebrow mt-10">Other policies</p>
+        <ul class="mt-4 space-y-1">
+          {related.filter((r) => r.href !== path).map((r) => (
+            <li><a href={r.href} class="inline-flex min-h-11 items-center text-sm font-bold text-lagoon-700 hover:text-lotus-600">{r.label}</a></li>
+          ))}
+        </ul>
+      </aside>
+
+      <div class="min-w-0 max-w-3xl">
+        <div class="legal-prose"><slot /></div>
+        <div class="mt-14 rounded-3xl bg-lagoon-50 p-8">
+          <h2 class="font-display text-2xl text-lagoon-900">Questions about this page?</h2>
+          <p class="mt-3 text-ink-soft">Call us or visit our office and we will be glad to help.</p>
+          <ul class="mt-5 space-y-3 text-ink">
+            <li class="flex gap-3"><Icon name="phone" class="mt-1 h-5 w-5 shrink-0 text-lotus-600" /><a href={site.phoneHref} class="font-bold text-lagoon-700 hover:text-lotus-600">{site.phone}</a></li>
+            <li class="flex gap-3"><Icon name="mapPin" class="mt-1 h-5 w-5 shrink-0 text-lotus-600" />{site.name}, {site.address.line1}, {site.address.city}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

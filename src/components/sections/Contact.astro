@@ -1,0 +1,67 @@
+---
+import { site } from "../../data/site";
+import ContactForm from "../islands/ContactForm";
+import Reveal from "../islands/Reveal";
+import Icon from "../ui/Icon.astro";
+---
+
+<section id="contact" class="section bg-lagoon-50">
+  <div class="wrap">
+    <Reveal client:visible className="mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Get In Touch</p>
+      <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">We would love to <em class="font-display text-lotus-600">hear from you</em></h2>
+      <p class="mt-4 text-ink-soft">Send us a message or call the office. For medical emergencies, call 911.</p>
+    </Reveal>
+
+    <div class="mt-14 grid gap-8 lg:grid-cols-5">
+      <Reveal client:visible className="lg:col-span-2">
+        <div class="h-full rounded-3xl bg-white p-7 shadow-xl shadow-lagoon-900/5 sm:p-9">
+          <h3 class="text-2xl text-lagoon-900">Send a message</h3>
+          <div class="mt-6">
+            <ContactForm client:visible />
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal client:visible delay={0.12} className="lg:col-span-3">
+        <div class="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-xl shadow-lagoon-900/5">
+          <iframe
+            title="Map showing the MLP OB GYN office at 6286 Briarcrest Avenue, Memphis"
+            src={site.mapEmbed}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            class="min-h-[320px] w-full flex-1 border-0"
+          ></iframe>
+          <div class="grid gap-6 p-7 sm:grid-cols-3 sm:p-9">
+            <div class="flex gap-3">
+              <span class="mt-0.5 text-lotus-600"><Icon name="mapPin" /></span>
+              <div>
+                <p class="font-bold text-lagoon-900">Visit</p>
+                <address class="mt-1 text-sm not-italic text-ink-soft">{site.address.line1}<br />{site.address.city}</address>
+                <a href={site.mapLink} target="_blank" rel="noopener noreferrer" class="mt-2 inline-block text-sm font-bold text-lagoon-700 underline underline-offset-4 hover:text-lotus-600">Get directions</a>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <span class="mt-0.5 text-lotus-600"><Icon name="phone" /></span>
+              <div>
+                <p class="font-bold text-lagoon-900">Call</p>
+                <a href={site.phoneHref} class="mt-1 block text-sm text-ink-soft hover:text-lotus-600">{site.phone}</a>
+                <p class="text-sm text-ink-soft">Fax {site.fax}</p>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <span class="mt-0.5 text-lotus-600"><Icon name="clock" /></span>
+              <div>
+                <p class="font-bold text-lagoon-900">Hours</p>
+                {site.hours.map((h) => (
+                  <p class="mt-1 text-sm text-ink-soft">{h.day}<br /><span class="text-ink">{h.time}</span></p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

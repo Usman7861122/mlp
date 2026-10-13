@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroSlider, { type Slide } from "../components/islands/HeroSlider";
+import { stock } from "../data/images";
+import About from "../components/sections/About.astro";
+import WhyUs from "../components/sections/WhyUs.astro";
+import Services from "../components/sections/Services.astro";
+import Insurance from "../components/sections/Insurance.astro";
+import Providers from "../components/sections/Providers.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
+import Blog from "../components/sections/Blog.astro";
+import Contact from "../components/sections/Contact.astro";
+
+const slides: Slide[] = [
+  {
+    image: stock.hero1,
+    alt: "Five smiling women wearing pink shirts with ribbons, standing together outdoors",
+    eyebrow: "Memphis, Tennessee",
+    title: "Care that truly listens",
+    text: "Board-certified OB-GYNs for every stage of life.",
+    position: "center 18%",
+  },
+  {
+    image: stock.hero2,
+    alt: "A happy couple holding their newborn baby",
+    eyebrow: "Obstetrics",
+    title: "Welcome your baby with confidence",
+    text: "Prenatal care and delivery by a team you can trust.",
+    position: "center 20%",
+  },
+  {
+    image: stock.hero3,
+    alt: "A sleeping newborn cradled gently in her parents' hands",
+    eyebrow: "Delivery",
+    title: "Every first, held with care",
+    text: "Gentle support from your first hello onward.",
+    position: "center 35%",
+  },
+];
+---
+
+<BaseLayout>
+  <HeroSlider client:load slides={slides} />
+  <About />
+  <WhyUs />
+  <Services />
+  <Insurance />
+  <Providers />
+  <Testimonials />
+  <Blog />
+  <Contact />
+</BaseLayout>

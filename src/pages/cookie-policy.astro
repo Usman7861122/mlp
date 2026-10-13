@@ -1,0 +1,67 @@
+---
+// NOTE: Update the table below if analytics or advertising tools are added to the site.
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site } from "../data/site";
+
+const toc = [
+  { id: "what-are-cookies", label: "What are cookies?" },
+  { id: "how-we-use", label: "How we use them" },
+  { id: "your-choices", label: "Your choices" },
+  { id: "third-party", label: "Third-party content" },
+  { id: "contact", label: "Contact us" },
+];
+---
+
+<LegalLayout
+  title="Cookie Policy | Martin, Lee & Page OB GYN"
+  description="What cookies and similar tools the Martin, Lee & Page OB GYN website uses, and how you can control them."
+  heading="Cookie"
+  accent="Policy"
+  lead="This page explains the cookies and similar tools used on our website, and how you can choose what you allow."
+  updated="October 13, 2026"
+  toc={toc}>
+  <h2 id="what-are-cookies">What are cookies?</h2>
+  <p>Cookies are small text files that a website saves on your device. Similar tools, such as your browser's local storage, work in a like way. They help a website remember your choices and work properly.</p>
+
+  <h2 id="how-we-use">How we use them</h2>
+  <p>We group these tools into three kinds:</p>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>What it does</th><th>Your choice</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Necessary</strong></td>
+        <td>Keeps the site working and remembers your cookie choice. We save that choice in your browser (name: <code>mlp-cookie-consent</code>) for up to 12 months.</td>
+        <td>Always on. Needed for the site to work.</td>
+      </tr>
+      <tr>
+        <td><strong>Analytics</strong></td>
+        <td>Helps us understand how visitors use the site, so we can improve it. Data is used in a summary form.</td>
+        <td>Off unless you accept.</td>
+      </tr>
+      <tr>
+        <td><strong>Marketing</strong></td>
+        <td>Lets us measure our ads and show you more relevant information on other sites.</td>
+        <td>Off unless you accept.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Analytics and marketing tools load only after you say yes. If we do not use a tool at a given time, nothing is loaded even if you accept.</p>
+
+  <h2 id="your-choices">Your choices</h2>
+  <ul>
+    <li>When you first visit, a banner lets you accept all, decline everything that is not necessary, or choose by type.</li>
+    <li>You can change your mind at any time. Use the button below, or the "Cookie Settings" link at the bottom of any page.</li>
+    <li>You can also block or delete cookies in your browser settings. Some parts of the site may not work properly if you block necessary cookies.</li>
+  </ul>
+  <p class="mt-6"><button type="button" class="btn btn-primary" data-open-cookie-settings>Open cookie settings</button></p>
+
+  <h2 id="third-party">Third-party content</h2>
+  <p>Some content on our site comes from other companies, such as an embedded Google map. When it loads, that company may set its own cookies. Please read their privacy policies to learn more.</p>
+
+  <h2 id="contact">Contact us</h2>
+  <p>
+    Questions about this policy? Call us at <a href={site.phoneHref}>{site.phone}</a>. You can also read our <a href="/privacy-policy">Privacy Policy</a>.
+  </p>
+</LegalLayout>

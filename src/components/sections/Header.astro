@@ -1,0 +1,119 @@
+---
+import { navLinks } from "../../data/navigation";
+import { site } from "../../data/site";
+import Icon from "../ui/Icon.astro";
+import MobileMenu from "../islands/MobileMenu";
+import { stock } from "../../data/images";
+---
+
+<div class="hidden bg-lagoon-950 text-lagoon-100 lg:block">
+  <div class="wrap flex h-10 items-center justify-between text-[0.8rem] tracking-wide">
+    <p class="flex items-center gap-2">
+      <Icon name="clock" class="h-4 w-4 text-lotus-400" />
+      Mon – Fri, 8:00 am – 4:30 pm
+    </p>
+    <div class="flex items-center gap-6">
+      <a href={site.phoneHref} class="flex items-center gap-2 hover:text-white">
+        <Icon name="phone" class="h-4 w-4 text-lotus-400" />
+        {site.phone}
+      </a>
+      <span class="h-4 w-px bg-white/20" aria-hidden="true"></span>
+      <div class="flex items-center gap-1">
+        <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="grid h-8 w-8 place-items-center rounded-full hover:bg-white/10 hover:text-white">
+          <Icon name="facebook" class="h-4 w-4" />
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="grid h-8 w-8 place-items-center rounded-full hover:bg-white/10 hover:text-white">
+          <Icon name="instagram" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="sticky top-0 z-50 border-b border-lagoon-100/70 bg-ivory/90 backdrop-blur-md">
+  <div class="wrap flex h-24 items-center justify-between gap-6">
+    <a href="/" aria-label={`${site.name} home`} class="shrink-0">
+      <img src="/images/logo.png" alt="Martin, Lee & Page OB GYN" width="380" height="214" class="h-[4.25rem] w-auto" />
+    </a>
+
+    <nav aria-label="Main" class="hidden xl:block">
+      <ul class="flex items-center gap-1">
+        {navLinks.map((item) => (
+          <li class={item.mega ? "group" : "group relative"}>
+            <a
+              href={item.href}
+              class={`flex items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.95rem] font-bold text-ink transition-colors hover:text-lotus-600 ${item.mega ? "min-h-[6rem]" : "min-h-11"}`}
+              {...(item.children ? { "aria-haspopup": "true" } : {})}
+            >
+              {item.label}
+              {item.children && <Icon name="chevronDown" class="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />}
+            </a>
+            {item.children && item.mega && (
+              <div class="invisible absolute inset-x-0 top-full z-10 translate-y-2 opacity-0 transition duration-300 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <div class="wrap">
+                  <div class="grid overflow-hidden rounded-b-[2rem] border border-t-0 border-lagoon-100 bg-white shadow-2xl shadow-lagoon-900/15 lg:grid-cols-[22rem_1fr]">
+                    <div class="relative isolate flex min-h-[20rem] flex-col justify-end overflow-hidden p-8 text-white">
+                      <img src={stock.ob} alt="" loading="lazy" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+                      <div class="absolute inset-0 -z-10 bg-gradient-to-t from-lagoon-950/95 via-lagoon-900/70 to-lagoon-900/30" aria-hidden="true"></div>
+                      <p class="eyebrow !text-lotus-200">Our Services</p>
+                      <p class="mt-3 font-display text-3xl leading-tight">Complete care for every <em class="text-lotus-300">chapter</em></p>
+                      <p class="mt-3 text-sm text-lagoon-100/85">From your first prenatal visit to menopause and beyond.</p>
+                      <a href={item.href} class="btn btn-primary btn-beam mt-6 self-start !min-h-11 !px-6">View All Services <Icon name="arrowRight" class="h-4 w-4" /></a>
+                    </div>
+                    <div class="flex flex-col p-6 lg:p-8">
+                      <ul class="grid flex-1 gap-x-4 gap-y-1 sm:grid-cols-2">
+                        {item.children.filter((c) => c.desc).map((c) => (
+                          <li>
+                            <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} class="group/item flex items-center gap-4 rounded-2xl p-3 transition-colors hover:bg-lagoon-50 focus-visible:bg-lagoon-50">
+                              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-lotus-100 text-lotus-600 transition-colors duration-300 group-hover/item:bg-lotus-600 group-hover/item:text-white">
+                                <Icon name={(c.icon ?? "heart") as any} class="h-5 w-5" />
+                              </span>
+                              <span class="min-w-0 flex-1">
+                                <span class="block font-display text-lg leading-tight text-lagoon-900">{c.label}</span>
+                                <span class="mt-0.5 block text-sm text-ink-soft">{c.desc}</span>
+                              </span>
+                              <Icon name="arrowRight" class="h-4 w-4 shrink-0 -translate-x-1 text-lotus-600 opacity-0 transition duration-300 group-hover/item:translate-x-0 group-hover/item:opacity-100" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-lagoon-100 pt-5 text-sm text-ink-soft">
+                        <p>Not sure what you need? Call us at <a href={site.phoneHref} class="font-bold text-lagoon-700 hover:text-lotus-600">{site.phone}</a>.</p>
+                        <a href="/#contact" class="inline-flex items-center gap-1.5 font-bold text-lotus-600 hover:gap-2.5 transition-all">Book a visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {item.children && !item.mega && (
+              <ul class="invisible absolute left-0 top-full z-10 w-72 translate-y-2 rounded-2xl border border-lagoon-100 bg-white p-2 opacity-0 shadow-xl shadow-lagoon-900/10 transition duration-300 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {item.children.map((c) => (
+                  <li>
+                    <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} class="flex min-h-11 items-center justify-between gap-3 rounded-xl px-4 py-2 text-sm text-ink hover:bg-lagoon-50 hover:text-lagoon-700">
+                      {c.label}
+                      {c.external && <Icon name="external" class="h-4 w-4 shrink-0 opacity-50" />}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="/#contact" class="btn btn-primary btn-beam hidden !min-h-11 !px-6 sm:inline-flex">Book a Visit</a>
+      <div class="hidden items-center gap-1 sm:flex xl:hidden" aria-hidden="false">
+        <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="grid h-11 w-11 place-items-center rounded-full text-lagoon-700 hover:bg-lagoon-50">
+          <Icon name="facebook" />
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="grid h-11 w-11 place-items-center rounded-full text-lagoon-700 hover:bg-lagoon-50">
+          <Icon name="instagram" />
+        </a>
+      </div>
+      <MobileMenu client:load links={navLinks} phone={site.phone} phoneHref={site.phoneHref} facebook={site.social.facebook} instagram={site.social.instagram} />
+    </div>
+  </div>
+</header>

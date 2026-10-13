@@ -1,0 +1,29 @@
+---
+import { providers } from "../../data/providers";
+import Reveal from "../islands/Reveal";
+import ProviderCard from "../ui/ProviderCard.astro";
+import Icon from "../ui/Icon.astro";
+---
+
+<section id="providers" class="section overflow-x-clip bg-lagoon-50">
+  <div class="wrap">
+    <Reveal client:visible className="mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Our Providers</p>
+      <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Meet the people who <em class="font-display text-lotus-600">care for you</em></h2>
+    </Reveal>
+
+    <ul class="mt-16 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {providers.map((p, i) => (
+        <li>
+          <Reveal client:visible delay={(i % 3) * 0.1}>
+            <ProviderCard provider={p} />
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-14 text-center">
+      <a href="/providers" class="btn btn-outline">Meet the whole team <Icon name="arrowRight" class="h-4 w-4" /></a>
+    </div>
+  </div>
+</section>

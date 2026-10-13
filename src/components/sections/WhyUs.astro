@@ -1,0 +1,37 @@
+---
+import Reveal from "../islands/Reveal";
+import Icon from "../ui/Icon.astro";
+
+const reasons = [
+  { icon: "heart", title: "Care that listens", text: "Patients tell us the same thing: we take time, answer questions and never rush." },
+  { icon: "award", title: "Trusted expertise", text: "Our physicians are board-certified OB-GYNs, backed by experienced nurse practitioners and PAs." },
+  { icon: "users", title: "Every stage of life", text: "Pregnancy and delivery, annual exams, menopause and everything in between." },
+  { icon: "shield", title: "Easy to access", text: "Convenient Memphis location, weekday hours and most major insurance plans accepted." },
+];
+---
+
+<section class="section relative overflow-hidden bg-lagoon-900 text-white">
+  <div class="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-lotus-500/10 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-48 -left-32 h-[30rem] w-[30rem] rounded-full bg-lagoon-400/10 blur-3xl" aria-hidden="true"></div>
+
+  <div class="wrap relative">
+    <Reveal client:visible className="mx-auto max-w-2xl text-center">
+      <p class="eyebrow !text-lotus-200">Why Choose Us</p>
+      <h2 class="mt-4 text-4xl sm:text-5xl">Why Memphis women choose <em class="font-display text-lotus-200">MLP OB GYN</em></h2>
+    </Reveal>
+
+    <div class="mt-16 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+      {reasons.map((r, i) => (
+        <Reveal client:visible delay={i * 0.1} className="h-full">
+          <article class="group h-full bg-lagoon-900 p-8 transition-colors duration-500 hover:bg-lagoon-800 lg:p-10">
+            <span class="grid h-14 w-14 place-items-center rounded-full border border-lotus-400/40 text-lotus-200 transition duration-500 group-hover:scale-110 group-hover:bg-lotus-500 group-hover:text-white">
+              <Icon name={r.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-8 text-2xl">{r.title}</h3>
+            <p class="mt-3 text-lagoon-100/80">{r.text}</p>
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

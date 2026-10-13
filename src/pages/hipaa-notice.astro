@@ -1,0 +1,105 @@
+---
+// NOTE: This is a template of the HIPAA Notice of Privacy Practices (45 CFR 164.520).
+// The practice's privacy officer or attorney MUST review it and name the Privacy Officer before launch.
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site } from "../data/site";
+
+const toc = [
+  { id: "overview", label: "Overview" },
+  { id: "uses", label: "How we may use and share your information" },
+  { id: "authorization", label: "When we need your written permission" },
+  { id: "rights", label: "Your rights" },
+  { id: "our-duties", label: "Our duties" },
+  { id: "changes", label: "Changes to this notice" },
+  { id: "complaints", label: "Complaints" },
+  { id: "contact", label: "Privacy contact" },
+];
+---
+
+<LegalLayout
+  title="HIPAA Notice of Privacy Practices | Martin, Lee & Page OB GYN"
+  description="How medical information about you may be used and shared by Martin, Lee & Page OB GYN, and how you can get access to it. HIPAA Notice of Privacy Practices."
+  heading="HIPAA Notice of"
+  accent="Privacy Practices"
+  lead="This notice describes how medical information about you may be used and shared, and how you can get access to this information. Please review it carefully."
+  updated="October 13, 2026"
+  toc={toc}>
+  <h2 id="overview">Overview</h2>
+  <p>{site.name} is required by federal law (the Health Insurance Portability and Accountability Act, or HIPAA) to keep your health information private, to give you this notice, and to follow it. "Health information" means information about your health, care or payment for care that can identify you. This notice applies to our providers and staff at {site.address.line1}, {site.address.city}.</p>
+  <p><strong>Effective date:</strong> October 13, 2026.</p>
+
+  <h2 id="uses">How we may use and share your information</h2>
+  <p>The law lets us use and share your health information in these ways without asking for your written permission:</p>
+  <h3>For treatment</h3>
+  <p>We share information with doctors, nurses, labs, hospitals and other providers who help care for you. For example, we may send test results to a specialist, or share information with the hospital where you will deliver your baby.</p>
+  <h3>For payment</h3>
+  <p>We use and share information to bill and collect payment for your care, such as sending details to your insurance plan so it can pay us.</p>
+  <h3>For health care operations</h3>
+  <p>We use information to run our practice, such as checking the quality of our care, training staff, and making sure the practice runs well.</p>
+  <h3>Other ways we may use or share information</h3>
+  <ul>
+    <li><strong>Appointment reminders</strong> and information about treatment options or health services that may interest you.</li>
+    <li><strong>People involved in your care or payment</strong>, such as a family member you ask us to include, or in an emergency if you cannot tell us.</li>
+    <li><strong>Public health</strong>, for example to report births, certain diseases or problems with medicines.</li>
+    <li><strong>Health oversight</strong>, such as audits and inspections by government agencies.</li>
+    <li><strong>Required by law</strong>, including court orders, subpoenas and law enforcement requests that meet legal rules.</li>
+    <li><strong>Abuse, neglect or domestic violence</strong>, when the law requires or allows us to report.</li>
+    <li><strong>Serious threats</strong> to health or safety.</li>
+    <li><strong>Research</strong>, when a review board has approved it or when information has had your identity removed.</li>
+    <li><strong>Workers' compensation</strong>, organ donation, coroners and funeral directors, and national security matters, as the law allows.</li>
+    <li><strong>Business associates</strong>, which are companies that do work for us and agree in writing to protect your information.</li>
+  </ul>
+  <p>Some health information has extra protection under federal or Tennessee law, such as certain information about substance use treatment, mental health and HIV. When a stricter law applies, we follow it.</p>
+
+  <h2 id="authorization">When we need your written permission</h2>
+  <p>For uses and sharing not described above, we will ask for your written permission (an "authorization"). Examples include:</p>
+  <ul>
+    <li>Most uses of psychotherapy notes.</li>
+    <li>Using or sharing your information for marketing.</li>
+    <li>Any sale of your health information.</li>
+  </ul>
+  <p>You may cancel your permission at any time by telling us in writing. This will not undo anything we already did while your permission was in place.</p>
+
+  <h2 id="rights">Your rights</h2>
+  <ul>
+    <li><strong>See and get a copy.</strong> You can ask to see or get a copy of your medical and billing records, on paper or electronically. We will respond within 30 days. We may charge a reasonable, cost-based fee.</li>
+    <li><strong>Ask for a correction.</strong> If you think something in your record is wrong or incomplete, you can ask us to fix it. We may say no, and if so we will tell you why in writing.</li>
+    <li><strong>Ask for private communication.</strong> You can ask us to contact you in a certain way or place, such as only on your mobile phone. We will say yes if the request is reasonable.</li>
+    <li><strong>Ask us to limit what we share.</strong> You can ask us not to use or share certain information for treatment, payment or operations. We do not have to agree, except that we must agree if you pay for a service in full out of pocket and ask us not to tell your health plan.</li>
+    <li><strong>Get a list of disclosures.</strong> You can ask for a list of the times we shared your information, for up to six years before your request, with some exceptions.</li>
+    <li><strong>Get a paper copy of this notice</strong>, even if you agreed to get it electronically. Just ask.</li>
+    <li><strong>Choose someone to act for you.</strong> If someone is your legal guardian or has a medical power of attorney, that person can use your rights for you.</li>
+    <li><strong>Be told about a breach.</strong> We will tell you if your health information is improperly shared in a way that puts its privacy or security at risk.</li>
+  </ul>
+  <p>To use any of these rights, call or write to us using the contact details below.</p>
+
+  <h2 id="our-duties">Our duties</h2>
+  <ul>
+    <li>We must keep your health information private and secure.</li>
+    <li>We must tell you if a breach affects your information.</li>
+    <li>We must follow the duties and privacy practices in this notice and give you a copy of it.</li>
+    <li>We will not use or share your information in ways other than those described here without your written permission.</li>
+  </ul>
+
+  <h2 id="changes">Changes to this notice</h2>
+  <p>We may change this notice, and the new notice will apply to all the health information we keep. The current notice is always posted in our office and on this website, and you can ask for a copy at any visit.</p>
+
+  <h2 id="complaints">Complaints</h2>
+  <p>If you think your privacy rights were violated, you may file a complaint with our office or with the U.S. Department of Health and Human Services, Office for Civil Rights. <strong>We will not punish you or treat you differently for filing a complaint.</strong></p>
+  <ul>
+    <li>U.S. Department of Health and Human Services, Office for Civil Rights, 200 Independence Avenue SW, Washington, DC 20201</li>
+    <li>Phone: 1-877-696-6775</li>
+    <li>Website: <a href="https://www.hhs.gov/hipaa/filing-a-complaint/index.html" target="_blank" rel="noopener noreferrer">hhs.gov/hipaa/filing-a-complaint</a></li>
+  </ul>
+
+  <h2 id="contact">Privacy contact</h2>
+  <p>
+    Privacy Officer, {site.name}<br />
+    {site.address.line1}, {site.address.city}<br />
+    Phone: <a href={site.phoneHref}>{site.phone}</a><br />
+    Fax: {site.fax}
+  </p>
+  <div class="legal-callout">
+    This notice covers your medical record. For information collected through this website, see our <a href="/privacy-policy">Privacy Policy</a>.
+  </div>
+</LegalLayout>

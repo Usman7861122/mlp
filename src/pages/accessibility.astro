@@ -1,0 +1,54 @@
+---
+// NOTE: Review with the practice before launch. Update the "Known limits" list after an accessibility audit.
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site } from "../data/site";
+
+const toc = [
+  { id: "commitment", label: "Our commitment" },
+  { id: "what-we-do", label: "What we have done" },
+  { id: "known-limits", label: "Known limits" },
+  { id: "help", label: "Need help?" },
+  { id: "feedback", label: "Tell us what we can improve" },
+];
+---
+
+<LegalLayout
+  title="Accessibility Statement | Martin, Lee & Page OB GYN"
+  description="Our commitment to making the Martin, Lee & Page OB GYN website easy to use for everyone, including people with disabilities."
+  heading="Accessibility"
+  accent="Statement"
+  lead="Every woman deserves easy access to care and to information about it. We want this website to work for everyone."
+  updated="October 13, 2026"
+  toc={toc}>
+  <h2 id="commitment">Our commitment</h2>
+  <p>{site.name} is working to make this website accessible to people with disabilities. Our goal is to meet the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA, which are widely used standards for accessible websites.</p>
+
+  <h2 id="what-we-do">What we have done</h2>
+  <ul>
+    <li><strong>Keyboard use.</strong> You can move through the whole site with the Tab key. Links and buttons show a clear focus outline.</li>
+    <li><strong>Skip link.</strong> A "Skip to content" link appears at the top when you press Tab.</li>
+    <li><strong>Screen readers.</strong> We use headings, landmarks, labels and image descriptions (alt text) so content makes sense when it is read aloud.</li>
+    <li><strong>Readable text.</strong> We use clear fonts, strong color contrast, and text that can be enlarged in your browser without losing content.</li>
+    <li><strong>Touch targets.</strong> Buttons and links are large enough to tap easily on a phone.</li>
+    <li><strong>Motion.</strong> If your device is set to "reduce motion", we turn off animations and do not start the video automatically. The video on our home page is silent and has a pause button.</li>
+    <li><strong>Responsive design.</strong> The site works on phones, tablets and computers.</li>
+  </ul>
+
+  <h2 id="known-limits">Known limits</h2>
+  <p>We keep testing and improving, but some parts may not be fully accessible yet:</p>
+  <ul>
+    <li>Patient forms in PDF format may be hard to use with some assistive tools. If you need a form in another way, call us and we will help.</li>
+    <li>Content from other companies, such as the embedded map or social media pages, is outside our control.</li>
+  </ul>
+
+  <h2 id="help">Need help?</h2>
+  <p>If you have trouble using any part of this website, or you need information in another format, please contact us. We can help by phone, send information in a different format, or help you book your visit.</p>
+  <p>
+    Phone: <a href={site.phoneHref}>{site.phone}</a><br />
+    Address: {site.address.line1}, {site.address.city}
+  </p>
+  <p>Our office is open Monday to Friday, 8:00 am to 4:30 pm. If you need extra help during your visit, please tell us when you book and we will do our best to help.</p>
+
+  <h2 id="feedback">Tell us what we can improve</h2>
+  <p>If you find a barrier on this website, please tell us the page and what went wrong. We take your feedback seriously and will work to fix problems as soon as we can.</p>
+</LegalLayout>

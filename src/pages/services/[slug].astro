@@ -1,0 +1,217 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import Icon from "../../components/ui/Icon.astro";
+import ProviderCard from "../../components/ui/ProviderCard.astro";
+import Insurance from "../../components/sections/Insurance.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { serviceDetails } from "../../data/serviceDetails";
+import { physicians } from "../../data/providers";
+import { site } from "../../data/site";
+
+export function getStaticPaths() {
+  return serviceDetails.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+
+const { s } = Astro.props;
+const url = `https://www.mlpobgyn.com/services/${s.slug}`;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    name: site.name,
+    url,
+    telephone: site.phone,
+    medicalSpecialty: s.specialty,
+    areaServed: { "@type": "City", name: "Memphis", containedInPlace: { "@type": "State", name: "Tennessee" } },
+    address: { "@type": "PostalAddress", streetAddress: site.address.line1, addressLocality: "Memphis", addressRegion: "TN", postalCode: "38120", addressCountry: "US" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: s.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  },
+];
+---
+
+<BaseLayout title={s.seoTitle} description={s.metaDescription}>
+  {jsonLd.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-lagoon-900 text-white">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
+      <div>
+        <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+          <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span>
+          <a href="/services" class="hover:text-white">Services</a> <span aria-hidden="true">/</span>
+          <span class="text-white">{s.label}</span>
+        </nav>
+        <p class="eyebrow mt-8 !text-lotus-200">{s.eyebrow}</p>
+        <h1 class="mt-4 text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">{s.h1} <em class="font-display text-lotus-300">{s.h1Accent}</em></h1>
+        <p class="mt-6 max-w-xl text-lg text-lagoon-100/90">{s.lead}</p>
+        <ul class="mt-6 flex flex-wrap gap-2.5">
+          {s.chips.map((c) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-lagoon-100">
+              <Icon name="check" class="h-4 w-4 text-lotus-300" /> {c}
+            </li>
+          ))}
+        </ul>
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a href="/#contact" class="btn btn-primary btn-beam">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+          <a href={site.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" /> {site.phone}</a>
+        </div>
+      </div>
+      <div class="relative mx-auto w-full max-w-md lg:max-w-none">
+        <div class="absolute -left-4 top-5 h-full w-full rounded-t-[999px] rounded-b-[2rem] border border-lotus-300/50" aria-hidden="true"></div>
+        <img src={s.images.hero} alt={s.images.heroAlt} width="2200" height="1467" fetchpriority="high" class="relative aspect-[4/5] w-full rounded-t-[999px] rounded-b-[2rem] object-cover shadow-2xl shadow-black/30" style={`object-position:${s.heroPos ?? "50% 50%"}`} />
+      </div>
+    </div>
+  </section>
+
+  <!-- What is obstetrics -->
+  <section class="section">
+    <div class="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <Reveal client:visible>
+        <img src={s.images.intro} alt={s.images.introAlt} loading="lazy" width="2200" height="1467" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-xl shadow-lagoon-900/10" />
+      </Reveal>
+      <Reveal client:visible delay={0.1}>
+        <p class="eyebrow">{s.intro.eyebrow}</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">{s.intro.title} <em class="font-display text-lotus-600">{s.intro.accent}</em></h2>
+        <div class="mt-7 space-y-5 text-lg text-ink-soft">
+          {s.intro.paras.map((p) => <p>{p}</p>)}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- What we cover -->
+  <section class="section bg-lagoon-50">
+    <div class="wrap">
+      <Reveal client:visible className="mx-auto max-w-2xl text-center">
+        <p class="eyebrow">{s.covers.eyebrow}</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">{s.covers.title} <em class="font-display text-lotus-600">{s.covers.accent}</em></h2>
+      </Reveal>
+      <ul class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {s.covers.items.map((c, i) => (
+          <li>
+            <Reveal client:visible delay={(i % 3) * 0.1} className="h-full">
+              <div class="group h-full rounded-3xl bg-white p-8 shadow-lg shadow-lagoon-900/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <span class="grid h-14 w-14 place-items-center rounded-full bg-lotus-100 text-lotus-600 transition-colors duration-300 group-hover:bg-lotus-600 group-hover:text-white"><Icon name={c.icon as any} class="h-7 w-7" /></span>
+                <h3 class="mt-6 text-2xl text-lagoon-900">{c.t}</h3>
+                <p class="mt-3 text-ink-soft">{c.d}</p>
+              </div>
+            </Reveal>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Why see an obstetrician -->
+  <section class="section">
+    <div class="wrap grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
+      <Reveal client:visible delay={0.1} className="order-2 lg:order-1 lg:col-span-3">
+        <p class="eyebrow">{s.why.eyebrow}</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">{s.why.title} <em class="font-display text-lotus-600">{s.why.accent}</em></h2>
+        <p class="mt-6 text-lg text-ink-soft">{s.why.intro}</p>
+        <ul class="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {s.why.items.map((it) => (
+            <li class="flex items-start gap-3 text-ink">
+              <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-lagoon-100 text-lagoon-700"><Icon name="check" class="h-3.5 w-3.5" /></span>
+              {it}
+            </li>
+          ))}
+        </ul>
+        <a href="/providers" class="btn btn-outline mt-9">Meet our doctors <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </Reveal>
+      <Reveal client:visible className="order-1 lg:order-2 lg:col-span-2">
+        <div class="relative mx-auto max-w-sm">
+          <div class="absolute -right-4 top-5 h-full w-full rounded-t-[999px] rounded-b-[2rem] border border-lotus-200" aria-hidden="true"></div>
+          <img src={s.images.portrait} alt={s.images.portraitAlt} loading="lazy" width="1467" height="2200" class="relative aspect-[4/5] w-full rounded-t-[999px] rounded-b-[2rem] object-cover shadow-2xl shadow-lagoon-900/15" style={`object-position:${s.portraitPos ?? "50% 50%"}`} />
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Journey -->
+  <section class="relative isolate overflow-hidden py-20 text-white lg:py-28">
+    <img src={s.images.wide} alt={s.images.wideAlt} loading="lazy" width="2200" height="1469" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-lagoon-950/95 via-lagoon-900/85 to-lagoon-900/60" aria-hidden="true"></div>
+    <div class="wrap">
+      <Reveal client:visible className="max-w-2xl">
+        <p class="eyebrow !text-lotus-200">{s.journey.eyebrow}</p>
+        <h2 class="mt-4 text-4xl sm:text-5xl">{s.journey.title} <em class="font-display text-lotus-300">{s.journey.accent}</em></h2>
+      </Reveal>
+      <ol class="mt-12 grid gap-6 md:grid-cols-3">
+        {s.journey.steps.map((st, i) => (
+          <li>
+            <Reveal client:visible delay={i * 0.1} className="h-full">
+              <div class="h-full rounded-3xl border border-white/20 bg-white/10 p-8 backdrop-blur-sm">
+                <span class="grid h-12 w-12 place-items-center rounded-full bg-lotus-500 font-display text-2xl">{i + 1}</span>
+                <h3 class="mt-5 text-2xl">{st.t}</h3>
+                <p class="mt-3 text-lagoon-100/90">{st.d}</p>
+              </div>
+            </Reveal>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Providers -->
+  <section class="section overflow-x-clip">
+    <div class="wrap">
+      <Reveal client:visible className="mx-auto max-w-2xl text-center">
+        <p class="eyebrow">Your doctors</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Three doctors who <em class="font-display text-lotus-600">listen</em></h2>
+      </Reveal>
+      <ul class="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3">
+        {physicians.map((p, i) => (
+          <li><Reveal client:visible delay={i * 0.1}><ProviderCard provider={p} compact /></Reveal></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-lagoon-50">
+    <div class="wrap grid gap-12 lg:grid-cols-5 lg:gap-16">
+      <Reveal client:visible className="lg:col-span-2">
+        <p class="eyebrow">Questions</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">{s.label} <em class="font-display text-lotus-600">FAQ</em></h2>
+        <p class="mt-5 text-lg text-ink-soft">Quick answers to common questions. Still wondering? Call us and we will gladly help.</p>
+      </Reveal>
+      <div class="space-y-4 lg:col-span-3">
+        {s.faq.map((f, i) => (
+          <Reveal client:visible delay={i * 0.05}>
+            <details class="group rounded-2xl bg-white p-6 shadow-md shadow-lagoon-900/5 open:shadow-lg" {...(i === 0 ? { open: true } : {})}>
+              <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-display text-xl text-lagoon-900 [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-lotus-100 text-lotus-600 transition-transform duration-300 group-open:rotate-180"><Icon name="chevronDown" class="h-4 w-4" /></span>
+              </summary>
+              <p class="mt-4 text-ink-soft">{f.a}</p>
+            </details>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-lotus-600 py-16 text-white lg:py-20">
+    <div class="wrap flex flex-wrap items-center justify-between gap-8">
+      <div class="max-w-2xl">
+        <h2 class="text-4xl sm:text-5xl">{s.cta.title} <em class="font-display text-lotus-100">{s.cta.accent}</em></h2>
+        <p class="mt-4 text-lg text-white/90">{s.cta.text}</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="/#contact" class="btn btn-light">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+        <a href={site.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" /> {site.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <Insurance />
+  <Contact />
+</BaseLayout>

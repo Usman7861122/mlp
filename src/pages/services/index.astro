@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { featuredServices } from "../../data/services";
+import { serviceDetails } from "../../data/serviceDetails";
+import { stock } from "../../data/images";
+import Icon from "../../components/ui/Icon.astro";
+---
+
+<BaseLayout title="Services | Martin, Lee & Page OB GYN" description="Obstetrics, gynecology, birth control, menopause care and more in Memphis, TN.">
+  <section class="bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="wrap">
+      <p class="eyebrow !text-lotus-200">Our Services</p>
+      <h1 class="mt-4 max-w-3xl text-5xl sm:text-6xl">Complete women's health care</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap space-y-16">
+      {featuredServices.map((s, i) => (
+        <article id={s.slug} class="grid items-center gap-10 lg:grid-cols-2">
+          <img src={stock[s.image]} alt="" loading="lazy" class={`aspect-[4/3] w-full rounded-3xl object-cover ${i % 2 ? "lg:order-2" : ""}`} />
+          <div>
+            <h2 class="text-4xl text-lagoon-900">{s.title}</h2>
+            <p class="mt-4 text-lg text-ink-soft">{s.blurb}</p>
+            <div class="mt-7 flex flex-wrap gap-3"><a href={`/services/${s.slug}`} class="btn btn-primary btn-beam">Learn more <Icon name="arrowRight" class="h-4 w-4" /></a><a href="/#contact" class="btn btn-outline">Book a Visit</a></div>
+          </div>
+        </article>
+      ))}
+
+      <div class="rounded-3xl bg-lagoon-50 p-8 sm:p-12">
+        <h2 class="text-3xl text-lagoon-900">All services</h2>
+        <ul class="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+          {serviceDetails.map((s) => (
+            <li><a href={`/services/${s.slug}`} class="flex min-h-11 items-center gap-3 font-semibold text-lagoon-900 hover:text-lotus-700"><Icon name="check" class="h-4 w-4 text-lotus-600" />{s.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

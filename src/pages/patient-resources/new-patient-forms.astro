@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import Icon from "../../components/ui/Icon.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { patientForms } from "../../data/resources";
+import { site } from "../../data/site";
+
+const forms = [
+  { t: "New Patient Registration Form", d: "Your contact details, insurance and basic information.", href: patientForms.registration },
+  { t: "Medical History Form", d: "A short history of your health, so your provider knows you from the start.", href: patientForms.medicalHistory },
+];
+const bring = ["A photo ID, such as your driver's license", "Your insurance card", "Your completed forms"];
+---
+
+<BaseLayout title="New Patient Registration Forms | Martin, Lee & Page OB GYN" description="Download and fill out your new patient registration and medical history forms before your first visit to Martin, Lee & Page OB GYN in Memphis, TN.">
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span>
+        <a href="/patient-resources" class="hover:text-white">Patient Resources</a> <span aria-hidden="true">/</span>
+        <span class="text-white">New Patient Forms</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">New Patients</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">New patient <em class="font-display text-lotus-300">forms</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">Welcome! Fill these out before your first visit and bring them with you. It helps your appointment start smoothly.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-10 lg:grid-cols-5 lg:gap-14">
+      <div class="lg:col-span-3">
+        <Reveal client:visible>
+          <p class="eyebrow">Download</p>
+          <h2 class="mt-4 text-4xl text-lagoon-900">Your <em class="font-display text-lotus-600">paperwork</em></h2>
+        </Reveal>
+        <ul class="mt-8 space-y-5">
+          {forms.map((f, i) => (
+            <li>
+              <Reveal client:visible delay={i * 0.1}>
+                <div class="flex flex-wrap items-center justify-between gap-5 rounded-3xl bg-lagoon-50 p-6 sm:p-8">
+                  <div class="flex items-start gap-4">
+                    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-lotus-100 text-lotus-600"><Icon name="check" class="h-6 w-6" /></span>
+                    <div>
+                      <h3 class="text-2xl text-lagoon-900">{f.t}</h3>
+                      <p class="mt-1 text-ink-soft">{f.d}</p>
+                      <p class="mt-1 text-sm text-ink-soft">PDF</p>
+                    </div>
+                  </div>
+                  <a href={f.href} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-beam" aria-label={`Open ${f.t} (PDF, opens in a new tab)`}>Open form <Icon name="arrowRight" class="h-4 w-4" /></a>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <Reveal client:visible delay={0.1} className="lg:col-span-2">
+        <aside class="rounded-3xl bg-lotus-50 p-8 sm:p-10">
+          <h2 class="text-3xl text-lagoon-900">Please bring</h2>
+          <ul class="mt-6 space-y-4">
+            {bring.map((b) => (
+              <li class="flex items-start gap-3 text-ink">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white text-lotus-600"><Icon name="check" class="h-3.5 w-3.5" /></span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-8 border-t border-lotus-100 pt-6 text-sm text-ink-soft">Not sure about something? Call us at <a href={site.phoneHref} class="font-bold text-lagoon-700 hover:text-lotus-600">{site.phone}</a>. We are happy to help.</p>
+        </aside>
+      </Reveal>
+    </div>
+  </section>
+
+  <Contact />
+</BaseLayout>

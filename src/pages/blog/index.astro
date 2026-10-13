@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { stock, type StockKey } from "../../data/images";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Blog | Martin, Lee & Page OB GYN">
+  <section class="bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="wrap"><p class="eyebrow !text-lotus-200">Blog</p><h1 class="mt-4 text-5xl sm:text-6xl">Health tips and news</h1></div>
+  </section>
+  <section class="section">
+    <div class="wrap grid gap-8 md:grid-cols-3">
+      {posts.map((p) => (
+        <a href={`/blog/${p.id}`} class="group block overflow-hidden rounded-3xl border border-lagoon-100 bg-white">
+          <img src={stock[p.data.image as StockKey]} alt="" loading="lazy" class="aspect-[4/3] w-full object-cover" />
+          <div class="p-6"><p class="eyebrow">{p.data.category}</p><h2 class="mt-2 text-2xl text-lagoon-900 group-hover:text-lotus-600">{p.data.title}</h2><p class="mt-2 text-ink-soft">{p.data.description}</p></div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

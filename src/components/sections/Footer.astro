@@ -1,0 +1,67 @@
+---
+import { site } from "../../data/site";
+import { featuredServices } from "../../data/services";
+import Icon from "../ui/Icon.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-lagoon-950 text-lagoon-100">
+  <div class="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12 lg:py-20">
+    <div class="lg:col-span-4">
+      <a href="/" class="inline-block rounded-2xl bg-white p-4" aria-label="MLP OB GYN home">
+        <img src="/images/logo.png" alt="Martin, Lee & Page OB GYN" width="380" height="214" loading="lazy" class="h-16 w-auto" />
+      </a>
+      <p class="mt-6 max-w-xs text-lagoon-100/75">Compassionate, personal women's health care for every stage of life, in the heart of Memphis.</p>
+      <div class="mt-6 flex gap-2">
+        <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="grid h-11 w-11 place-items-center rounded-full border border-white/20 transition hover:border-lotus-500 hover:bg-lotus-500 hover:text-white">
+          <Icon name="facebook" />
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="grid h-11 w-11 place-items-center rounded-full border border-white/20 transition hover:border-lotus-500 hover:bg-lotus-500 hover:text-white">
+          <Icon name="instagram" />
+        </a>
+      </div>
+    </div>
+
+    <nav aria-label="Footer" class="lg:col-span-2">
+      <h2 class="font-display text-xl text-white">Explore</h2>
+      <ul class="mt-5 space-y-1">
+        {[["About Practice", "/about"], ["Meet the Providers", "/providers"], ["Services", "/#services"], ["Testimonials", "/testimonials"], ["Blog", "/#blog"], ["Contact", "/contact"]].map(([l, h]) => (
+          <li><a href={h} class="inline-flex min-h-11 items-center text-lagoon-100/75 transition hover:text-lotus-200">{l}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Services" class="lg:col-span-3">
+      <h2 class="font-display text-xl text-white">Services</h2>
+      <ul class="mt-5 space-y-1">
+        {featuredServices.map((s) => (
+          <li><a href={`/services/${s.slug}`} class="inline-flex min-h-11 items-center text-lagoon-100/75 transition hover:text-lotus-200">{s.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="lg:col-span-3">
+      <h2 class="font-display text-xl text-white">Visit Us</h2>
+      <ul class="mt-5 space-y-4 text-lagoon-100/80">
+        <li class="flex gap-3"><Icon name="mapPin" class="mt-1 h-5 w-5 shrink-0 text-lotus-400" /><address class="not-italic">{site.address.line1}<br />{site.address.city}</address></li>
+        <li class="flex gap-3"><Icon name="phone" class="mt-1 h-5 w-5 shrink-0 text-lotus-400" /><a href={site.phoneHref} class="hover:text-lotus-200">{site.phone}</a></li>
+        <li class="flex gap-3"><Icon name="clock" class="mt-1 h-5 w-5 shrink-0 text-lotus-400" /><span>Mon – Fri: 8:00 am – 4:30 pm<br />Sat – Sun: Closed</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="wrap flex flex-col items-center justify-between gap-2 py-6 text-sm text-lagoon-100/60 sm:flex-row">
+      <p>© {year} Martin, Lee &amp; Page OB GYN. All rights reserved.</p>
+      <p>For medical emergencies, call 911.</p>
+    </div>
+    <nav aria-label="Legal" class="wrap pb-8">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-lagoon-100/70 sm:justify-start">
+        {[["Privacy Policy", "/privacy-policy"], ["Terms and Conditions", "/terms-and-conditions"], ["HIPAA Notice", "/hipaa-notice"], ["Accessibility", "/accessibility"], ["Cookie Policy", "/cookie-policy"]].map(([l, h]) => (
+          <li><a href={h} class="inline-flex min-h-11 items-center transition hover:text-lotus-200">{l}</a></li>
+        ))}
+        <li><button type="button" data-open-cookie-settings class="inline-flex min-h-11 items-center transition hover:text-lotus-200">Cookie Settings</button></li>
+      </ul>
+    </nav>
+  </div>
+</footer>

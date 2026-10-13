@@ -1,0 +1,99 @@
+---
+// NOTE: This is a plain-language template. Have the practice's attorney or compliance officer review it before launch.
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site } from "../data/site";
+
+const toc = [
+  { id: "who-we-are", label: "Who we are" },
+  { id: "what-we-collect", label: "Information we collect" },
+  { id: "how-we-use", label: "How we use information" },
+  { id: "health-information", label: "Your health information" },
+  { id: "cookies", label: "Cookies and similar tools" },
+  { id: "sharing", label: "How we share information" },
+  { id: "third-parties", label: "Third-party services" },
+  { id: "retention-security", label: "Keeping information safe" },
+  { id: "your-choices", label: "Your choices and rights" },
+  { id: "children", label: "Children" },
+  { id: "changes", label: "Changes to this policy" },
+  { id: "contact", label: "Contact us" },
+];
+---
+
+<LegalLayout
+  title="Privacy Policy | Martin, Lee & Page OB GYN"
+  description="How Martin, Lee & Page OB GYN in Memphis, TN collects, uses and protects information on this website."
+  heading="Privacy"
+  accent="Policy"
+  lead="We respect your privacy. This page explains what information this website collects, why, and the choices you have."
+  updated="October 13, 2026"
+  toc={toc}>
+  <h2 id="who-we-are">Who we are</h2>
+  <p>This website belongs to {site.name} ("we", "us", "our"), a women's health practice at {site.address.line1}, {site.address.city}. This Privacy Policy covers information we collect through this website only. How we handle your medical records is explained in our <a href="/hipaa-notice">HIPAA Notice of Privacy Practices</a>.</p>
+
+  <h2 id="what-we-collect">Information we collect</h2>
+  <h3>Information you give us</h3>
+  <ul>
+    <li>Your name, phone number, email address and message when you fill in a contact or appointment request form.</li>
+    <li>Anything else you choose to tell us when you call, email or write to us.</li>
+  </ul>
+  <h3>Information collected automatically</h3>
+  <ul>
+    <li>Basic technical data such as your browser type, device type, pages visited and the date and time of your visit.</li>
+    <li>Your approximate location, based on your IP address.</li>
+    <li>Your cookie choices, which are saved in your browser (see <a href="#cookies">Cookies and similar tools</a>).</li>
+  </ul>
+
+  <h2 id="how-we-use">How we use information</h2>
+  <ul>
+    <li>To answer your questions and respond to appointment requests.</li>
+    <li>To run, protect and improve this website.</li>
+    <li>To understand which pages are useful, if you allow analytics.</li>
+    <li>To follow the law and protect our rights.</li>
+  </ul>
+  <p>We do not sell your personal information.</p>
+
+  <h2 id="health-information">Your health information</h2>
+  <div class="legal-callout">
+    <strong>Please do not send private medical details through this website or by regular email.</strong> Website forms and email are not a secure way to share health information. If you need to talk about your care, call us at <a href={site.phoneHref}>{site.phone}</a>. <strong>In an emergency, call 911.</strong>
+  </div>
+  <p>Once you are a patient, the information in your medical record is protected by federal law (HIPAA). Our <a href="/hipaa-notice">Notice of Privacy Practices</a> explains how that information may be used and shared, and your rights.</p>
+
+  <h2 id="cookies">Cookies and similar tools</h2>
+  <p>Cookies are small files saved on your device. We use only the tools that are needed to run the site unless you say yes to more. You can change your choice at any time using the "Cookie Settings" link at the bottom of every page. Learn more in our <a href="/cookie-policy">Cookie Policy</a>.</p>
+
+  <h2 id="sharing">How we share information</h2>
+  <p>We share information only when needed:</p>
+  <ul>
+    <li><strong>Service providers</strong> that help us run the website (for example hosting, email and form services). They may use your information only to do their work for us.</li>
+    <li><strong>Legal reasons</strong>, such as a valid court order, or to protect the safety and rights of our patients, staff and others.</li>
+    <li><strong>A change in our business</strong>, such as a merger. Any new owner must protect your information in the same way.</li>
+  </ul>
+
+  <h2 id="third-parties">Third-party services</h2>
+  <p>This site may include content from other companies, such as an embedded Google map, links to our Facebook and Instagram pages, and links to patient forms or lab services. Those companies have their own privacy policies, and we are not responsible for how they handle your information.</p>
+
+  <h2 id="retention-security">Keeping information safe</h2>
+  <p>We use reasonable technical and organizational steps to protect information collected through this website. We keep it only as long as we need it for the reasons in this policy, or as the law requires. No website or method of sending data is completely secure, so we cannot promise absolute security.</p>
+
+  <h2 id="your-choices">Your choices and rights</h2>
+  <ul>
+    <li>You can change your cookie choices at any time.</li>
+    <li>You can ask us what personal information we hold from this website, ask us to correct it, or ask us to delete it. We will do this where the law allows.</li>
+    <li>You can ask us to stop contacting you.</li>
+  </ul>
+  <p>Depending on where you live, you may have extra rights under state privacy laws. To make a request, call us or write to the address below. Rights over your medical record are described in our <a href="/hipaa-notice">HIPAA Notice</a>.</p>
+
+  <h2 id="children">Children</h2>
+  <p>This website is meant for adults. We do not knowingly collect personal information from children under 13 through this site. If you believe a child has sent us information, please contact us and we will delete it.</p>
+
+  <h2 id="changes">Changes to this policy</h2>
+  <p>We may update this policy from time to time. The date at the top of the page shows when it was last changed. If we make a big change, we will post a clear notice on this website.</p>
+
+  <h2 id="contact">Contact us</h2>
+  <p>
+    {site.name}<br />
+    {site.address.line1}, {site.address.city}<br />
+    Phone: <a href={site.phoneHref}>{site.phone}</a><br />
+    Fax: {site.fax}
+  </p>
+</LegalLayout>

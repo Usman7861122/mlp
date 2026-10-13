@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import Icon from "../../components/ui/Icon.astro";
+import ProviderPortrait from "../../components/ui/ProviderPortrait.astro";
+import ProviderCard from "../../components/ui/ProviderCard.astro";
+import Insurance from "../../components/sections/Insurance.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { providers } from "../../data/providers";
+import { site } from "../../data/site";
+
+export function getStaticPaths() {
+  return providers.map((p, i) => ({
+    params: { slug: p.slug },
+    props: { provider: p, others: providers.filter((_, j) => j !== i) },
+  }));
+}
+
+const { provider: p, others } = Astro.props;
+const sections = [
+  { title: "Education & training", items: p.education.map((e) => `${e.label}: ${e.detail}`) },
+  { title: "Certifications", items: p.credentials },
+  { title: "Areas of focus", items: p.focus },
+  ...(p.languages ? [{ title: "Languages", items: p.languages }] : []),
+];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Physician",
+  name: `${p.name}, ${p.title}`,
+  jobTitle: p.role,
+  telephone: site.phone,
+  worksFor: { "@type": "MedicalClinic", name: site.name, address: { "@type": "PostalAddress", streetAddress: site.address.line1, addressLocality: "Memphis", addressRegion: "TN", postalCode: "38120", addressCountry: "US" } },
+};
+---
+
+<BaseLayout title={`${p.name}, ${p.title} | Martin, Lee & Page OB GYN`} description={`${p.name}, ${p.title}: ${p.summary} Martin, Lee & Page OB GYN, Memphis, TN.`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="relative overflow-hidden bg-lagoon-900 pb-0 pt-14 text-white lg:pt-16">
+    <div class="pointer-events-none absolute -right-20 top-0 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative grid items-end gap-10 lg:grid-cols-2">
+      <div class="pb-14 lg:pb-24">
+        <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+          <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span>
+          <a href="/providers" class="hover:text-white">Providers</a> <span aria-hidden="true">/</span>
+          <span class="text-white">{p.name}</span>
+        </nav>
+        <p class="eyebrow mt-8 !text-lotus-200">{p.role}</p>
+        <h1 class="mt-4 text-5xl leading-tight sm:text-6xl">{p.name}<span class="block text-3xl text-lotus-300 sm:text-4xl">{p.title}</span></h1>
+        <p class="mt-6 max-w-lg text-lg text-lagoon-100/90">{p.summary}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="/#contact" class="btn btn-primary btn-beam">Book with {p.firstName} <Icon name="arrowRight" class="h-4 w-4" /></a>
+          <a href={site.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" /> {site.phone}</a>
+        </div>
+      </div>
+      <div class="group mx-auto w-full max-w-sm translate-y-px lg:mx-0 lg:ml-auto">
+        <ProviderPortrait provider={p} class="!rounded-b-none !shadow-2xl" eager />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-14 lg:grid-cols-5 lg:gap-16">
+      <Reveal client:visible className="lg:col-span-3">
+        <p class="eyebrow">About {p.firstName}</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Care that feels <em class="font-display text-lotus-600">personal</em></h2>
+        <div class="mt-7 space-y-5 text-lg text-ink-soft">
+          {p.bio.map((para) => <p>{para}</p>)}
+        </div>
+        <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-lagoon-900 p-6 text-white sm:p-8">
+          <div>
+            <p class="font-display text-2xl">Ready to meet {p.firstName}?</p>
+            <p class="mt-1 text-lagoon-100/85">New patients are welcome. Most major insurance plans are accepted.</p>
+          </div>
+          <a href="/#contact" class="btn btn-primary btn-beam">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+        </div>
+        {p.beyond && (
+          <div class="mt-10 rounded-3xl bg-lotus-50 p-6">
+            <h3 class="flex items-center gap-2 text-xl text-lagoon-900"><Icon name="heart" class="h-5 w-5 text-lotus-600" /> Beyond the office</h3>
+            <p class="mt-2 text-ink-soft">{p.beyond}</p>
+          </div>
+        )}
+      </Reveal>
+
+      <Reveal client:visible delay={0.1} className="lg:col-span-2">
+        <aside class="space-y-8 rounded-3xl bg-lagoon-50 p-7 sm:p-9" aria-label={`${p.name} details`}>
+          {sections.map((s) => (
+            <div>
+              <h3 class="text-xl text-lagoon-900">{s.title}</h3>
+              <ul class="mt-3 space-y-2.5">
+                {s.items.map((it) => (
+                  <li class="flex items-start gap-3 text-ink-soft">
+                    <span class="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white text-lagoon-700"><Icon name="check" class="h-3 w-3" /></span>
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div class="border-t border-lagoon-100 pt-6 text-sm text-ink-soft">
+            <p class="font-bold text-lagoon-900">{site.name}</p>
+            <p>{site.address.line1}<br />{site.address.city}</p>
+            <p class="mt-2">Phone: <a href={site.phoneHref} class="font-bold text-lagoon-700 hover:text-lotus-600">{site.phone}</a></p>
+          </div>
+        </aside>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="section overflow-x-clip bg-lagoon-50 pt-16 lg:pt-20">
+    <div class="wrap">
+      <Reveal client:visible className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow">The team</p>
+          <h2 class="mt-3 text-3xl text-lagoon-900 sm:text-4xl">Meet our other providers</h2>
+        </div>
+        <a href="/providers" class="btn btn-outline">See everyone <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </Reveal>
+      <ul class="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+        {others.map((o) => (
+          <li><ProviderCard provider={o} compact /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Insurance />
+  <Contact />
+</BaseLayout>

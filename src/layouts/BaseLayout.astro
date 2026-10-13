@@ -1,0 +1,43 @@
+---
+import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/playfair-display/wght-italic.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import "../styles/global.css";
+import Header from "../components/sections/Header.astro";
+import Footer from "../components/sections/Footer.astro";
+import CookieConsent from "../components/islands/CookieConsent";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = `${site.name} | Memphis, TN`, description = site.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b3a47" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:shadow-lg">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main"><slot /></main>
+    <Footer />
+    <CookieConsent client:idle />
+  </body>
+</html>

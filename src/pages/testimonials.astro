@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Reveal from "../components/islands/Reveal";
+import Icon from "../components/ui/Icon.astro";
+import { testimonials } from "../data/testimonials";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Patient Testimonials | Martin, Lee & Page OB GYN Memphis, TN"
+  description={`Read what Memphis patients say about Martin, Lee & Page OB GYN. Rated ${site.rating.score} out of 5 from ${site.rating.count} reviews.`}
+>
+  <section class="bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="wrap">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span class="text-white">Testimonials</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">Testimonials</p>
+      <h1 class="mt-4 max-w-3xl text-5xl sm:text-6xl">Words from our <em class="font-display text-lotus-200">patients</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/85">
+        Rated {site.rating.score} out of 5 from {site.rating.count} reviews on Google, Facebook, Vitals and Healthgrades. Here are a few of the kind words our patients have shared.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/contact" class="btn btn-primary btn-beam">Book a Visit <Icon name="arrowRight" class="h-4 w-4" /></a>
+        <a href={site.googleProfile} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Read more on Google</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-lotus-50">
+    <div class="wrap">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {testimonials.map((t, i) => (
+          <Reveal client:visible delay={(i % 3) * 0.08} className="h-full">
+            <figure class="flex h-full flex-col rounded-3xl bg-white p-8 shadow-xl shadow-lagoon-900/5">
+              <div class="flex gap-1 text-lotus-600" role="img" aria-label="5 out of 5 stars">
+                {[0, 1, 2, 3, 4].map(() => <Icon name="star" class="h-5 w-5" />)}
+              </div>
+              <blockquote class="mt-5 flex-1 text-lg leading-relaxed text-ink">“{t.text}”</blockquote>
+              <figcaption class="mt-6 border-t border-lagoon-100 pt-4">
+                <p class="font-bold text-lagoon-900">{t.name}</p>
+                <p class="text-sm text-ink-soft">Patient of {t.doctor}</p>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+      <p class="mx-auto mt-10 max-w-2xl text-center text-sm text-ink-soft">
+        Reviews are shown with the patient's first name and last initial. Individual experiences may vary.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="wrap">
+      <div class="mx-auto max-w-3xl rounded-3xl bg-lotus-600 p-10 text-center text-white sm:p-14">
+        <h2 class="text-3xl sm:text-4xl">Ready to become a <em class="font-display">patient?</em></h2>
+        <p class="mt-4 text-white/90">Call us or request a visit online. We would love to meet you.</p>
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <a href="/contact" class="btn btn-light">Contact us</a>
+          <a href={site.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" /> {site.phone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

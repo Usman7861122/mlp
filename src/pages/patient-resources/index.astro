@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import Icon from "../../components/ui/Icon.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { patientForms } from "../../data/resources";
+
+const items = [
+  { icon: "check", t: "New Patient Registration Forms", d: "Fill these out before your first visit to save time at check-in.", href: "/patient-resources/new-patient-forms", cta: "Open forms" },
+  { icon: "phone", t: "Pap Smear Results", d: "Learn how and when you will hear about your results.", href: "/patient-resources/pap-smear-results", cta: "See how it works" },
+  { icon: "heart", t: "Medication During Pregnancy and Lactation", d: "A helpful guide to common medicines while you are pregnant or nursing (PDF).", href: patientForms.medication, cta: "Open PDF", external: true },
+];
+---
+
+<BaseLayout title="Patient Resources | Martin, Lee & Page OB GYN" description="Patient forms, Pap smear results and helpful guides from Martin, Lee & Page OB GYN in Memphis, TN.">
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span class="text-white">Patient Resources</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">Patient Resources</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">Everything you need, <em class="font-display text-lotus-300">in one place</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">Forms, results and guides to help you feel ready for every visit.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="grid gap-6 lg:grid-cols-3">
+        {items.map((x, i) => (
+          <li>
+            <Reveal client:visible delay={i * 0.1} className="h-full">
+              <a href={x.href} {...(x.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} class="group flex h-full flex-col rounded-3xl bg-lagoon-50 p-8 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-lagoon-900/10">
+                <span class="grid h-14 w-14 place-items-center rounded-full bg-lotus-100 text-lotus-600"><Icon name={x.icon as any} class="h-7 w-7" /></span>
+                <h2 class="mt-6 text-2xl text-lagoon-900">{x.t}</h2>
+                <p class="mt-3 flex-1 text-ink-soft">{x.d}</p>
+                <span class="mt-6 inline-flex items-center gap-2 font-bold text-lotus-600 transition-all duration-300 group-hover:gap-3">{x.cta} <Icon name="arrowRight" class="h-4 w-4" /></span>
+              </a>
+            </Reveal>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Contact />
+</BaseLayout>

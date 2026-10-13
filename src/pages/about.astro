@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Reveal from "../components/islands/Reveal";
+import Icon from "../components/ui/Icon.astro";
+import ProviderCard from "../components/ui/ProviderCard.astro";
+import Insurance from "../components/sections/Insurance.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
+import Contact from "../components/sections/Contact.astro";
+import { stock } from "../data/images";
+import { site } from "../data/site";
+import { physicians } from "../data/providers";
+
+const stats = [
+  { value: "100%", label: "Female team of providers" },
+  { value: "4×", label: "Voted Best Women's Clinic in Memphis, 2018 – 2021" },
+  { value: site.rating.score + " / 5", label: `From ${site.rating.count} patient reviews` },
+  { value: "20+", label: "Years of experience (Dr. Lee)" },
+];
+
+const cares = [
+  "Annual preventive exams",
+  "Pap smears",
+  "Pregnancy, including high-risk pregnancy",
+  "Prenatal care and delivery",
+  "Adolescent care",
+  "Birth control and family planning",
+  "Abnormal bleeding",
+  "Pelvic pain",
+  "PMS",
+  "Stress incontinence",
+  "Infertility",
+  "Menopause care",
+  "Minimally invasive laparoscopic surgery",
+  "Feminine aesthetic options",
+];
+
+const stories = [
+  { p: physicians[0], line: "Spent more than a decade at McDonald Murrmann Women's Clinic before co-founding the practice. Trained in robotic and minimally invasive surgery." },
+  { p: physicians[1], line: "More than 20 years in women's health, including a private practice in San Diego, where she was named a \"Top Doctor.\"" },
+  { p: physicians[2], line: "A former labor and delivery nurse who became a doctor. She also teaches future OB-GYNs at the University of Tennessee." },
+];
+---
+
+<BaseLayout title="About Our Practice | Martin, Lee & Page OB GYN" description="Meet Martin, Lee & Page OB GYN: an all-female team of physicians caring for women in Memphis, TN, from the teen years through menopause and beyond.">
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span class="text-white">About Practice</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">About Our Practice</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">Women's health care that <em class="font-display text-lotus-300">listens first.</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">An all-female team of physicians and practitioners in East Memphis, caring for women at every stage of life.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+      <Reveal client:visible>
+        <div class="relative mx-auto max-w-md">
+          <div class="absolute -left-5 top-6 h-full w-full rounded-t-[999px] rounded-b-[2rem] border border-lotus-200" aria-hidden="true"></div>
+          <img src={stock.about} alt="A doctor talking kindly with an expecting mother during a visit" loading="lazy" class="relative aspect-[4/5] w-full rounded-t-[999px] rounded-b-[2rem] object-cover object-[40%_50%] shadow-2xl shadow-lagoon-900/15" />
+        </div>
+      </Reveal>
+      <Reveal client:visible delay={0.1}>
+        <p class="eyebrow">Our story</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Built on time, respect and <em class="font-display text-lotus-600">clear answers</em></h2>
+        <div class="mt-7 space-y-5 text-lg text-ink-soft">
+          <p>Martin, Lee &amp; Page OB GYN is an all-female team of physicians, Dr. Kyle Martin, Dr. Helen Lee and Dr. Audrey Page, serving women across greater Memphis. They come from different backgrounds, and they share one belief: every woman deserves to be heard.</p>
+          <p>We care for you from the teen years through menopause and beyond. Our practice uses modern equipment and techniques, including minimally invasive laparoscopic surgery, so you can get back to your life sooner.</p>
+          <p>All three physicians are mothers. We know what it feels like to be on the other side of the exam room, and we bring that understanding to every visit.</p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="bg-lagoon-900 py-14 text-white">
+    <div class="wrap">
+      <dl class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s) => (
+          <div class="border-l border-lotus-400/60 pl-5">
+            <dt class="font-display text-4xl text-white">{s.value}</dt>
+            <dd class="mt-2 text-sm text-lagoon-100/80">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section overflow-x-clip bg-lagoon-50">
+    <div class="wrap">
+      <Reveal client:visible className="mx-auto max-w-2xl text-center">
+        <p class="eyebrow">The physicians</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Three doctors, <em class="font-display text-lotus-600">one practice</em></h2>
+      </Reveal>
+      <ul class="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {stories.map(({ p, line }, i) => (
+          <li>
+            <Reveal client:visible delay={i * 0.1}>
+              <ProviderCard provider={p} />
+              <p class="mx-auto mt-3 max-w-xs text-center text-sm text-ink-soft">{line}</p>
+            </Reveal>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-12 text-center">
+        <a href="/providers" class="btn btn-outline">Meet the whole team <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-5 lg:gap-16">
+      <Reveal client:visible className="lg:col-span-2">
+        <p class="eyebrow">What we care for</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Care for <em class="font-display text-lotus-600">every chapter</em></h2>
+        <p class="mt-6 text-lg text-ink-soft">From your first prenatal visit to menopause, you can see the same trusted team for all of your women's health needs.</p>
+        <a href="/services" class="btn btn-primary btn-beam mt-8">Explore our services <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </Reveal>
+      <Reveal client:visible delay={0.1} className="lg:col-span-3">
+        <ul class="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {cares.map((c) => (
+            <li class="flex items-start gap-3 text-ink">
+              <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-lagoon-100 text-lagoon-700"><Icon name="check" class="h-3.5 w-3.5" /></span>
+              {c}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="bg-lagoon-50 py-16 lg:py-20">
+    <div class="wrap">
+      <Reveal client:visible className="mx-auto max-w-2xl text-center">
+        <p class="eyebrow">Visiting us</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900">Easy to find, <em class="font-display text-lotus-600">easy to visit</em></h2>
+      </Reveal>
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          { icon: "mapPin", t: "East Memphis", d: `${site.address.line1}, ${site.address.city}, just off Poplar Avenue.` },
+          { icon: "heart", t: "Parking and drop-off", d: "Parking is available, along with a convenient drop-off and pick-up area." },
+          { icon: "phone", t: "After-hours line", d: `Call ${site.phone}. We also have an after-hours emergency phone line.` },
+          { icon: "shield", t: "New patients welcome", d: "We accept most major insurance plans. Call us if you are not sure about yours." },
+        ].map((x) => (
+          <li class="rounded-3xl bg-white p-6 shadow-lg shadow-lagoon-900/5">
+            <span class="grid h-12 w-12 place-items-center rounded-full bg-lotus-100 text-lotus-600"><Icon name={x.icon as any} class="h-6 w-6" /></span>
+            <h3 class="mt-5 text-xl text-lagoon-900">{x.t}</h3>
+            <p class="mt-2 text-sm text-ink-soft">{x.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Testimonials />
+  <Insurance />
+  <Contact />
+</BaseLayout>

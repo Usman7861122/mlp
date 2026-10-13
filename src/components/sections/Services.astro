@@ -1,0 +1,57 @@
+---
+import { featuredServices } from "../../data/services";
+import { stock } from "../../data/images";
+import Reveal from "../islands/Reveal";
+import Icon from "../ui/Icon.astro";
+---
+
+<section id="services" class="section bg-ivory">
+  <div class="wrap">
+    <Reveal client:visible className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Our Services</p>
+        <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">Complete care for every <em class="font-display text-lotus-600">chapter</em></h2>
+      </div>
+      <a href="/services" class="btn btn-outline self-start md:self-auto">View All Services <Icon name="arrowRight" class="h-4 w-4" /></a>
+    </Reveal>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {featuredServices.map((s, i) => (
+        <Reveal client:visible delay={(i % 3) * 0.1} className="h-full">
+          <a
+            href={`/services/${s.slug}`}
+            class="group relative block aspect-[4/5] overflow-hidden rounded-3xl bg-lagoon-900 shadow-lg shadow-lagoon-900/10 focus-visible:outline-offset-4"
+          >
+            <img
+              src={stock[s.image]}
+              alt=""
+              loading="lazy"
+              width="800"
+              height="1000"
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-110 group-focus-visible:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-lagoon-950/90 via-lagoon-950/20 to-transparent transition-opacity duration-500 group-hover:from-lagoon-950/95 group-hover:via-lagoon-950/55" aria-hidden="true"></div>
+            <div class="absolute inset-x-0 bottom-0 p-7 text-white">
+              <span class="mb-3 block text-sm font-bold tracking-[0.2em] text-lotus-200">0{i + 1}</span>
+              <h3 class="text-3xl">{s.title}</h3>
+              <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[var(--ease-luxe)] group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr] max-md:grid-rows-[1fr]">
+                <div class="overflow-hidden">
+                  <p class="pt-3 text-white/85">{s.blurb}</p>
+                  <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-lotus-200">
+                    Learn more <Icon name="arrowRight" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <span class="absolute inset-3 rounded-[1.25rem] border border-white/0 transition-colors duration-500 group-hover:border-white/40" aria-hidden="true"></span>
+          </a>
+        </Reveal>
+      ))}
+    </div>
+
+    <Reveal client:visible className="mt-14 text-center">
+      <p class="text-ink-soft">Looking for something else? We offer 20+ women's health services.</p>
+      <a href="/services" class="btn btn-primary mt-5">Explore All Services <Icon name="arrowRight" class="h-4 w-4" /></a>
+    </Reveal>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Reveal from "../../components/islands/Reveal";
+import Icon from "../../components/ui/Icon.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { papResults } from "../../data/resources";
+import { site } from "../../data/site";
+
+const steps = [
+  { n: "1", t: "Wait 7 to 10 days", d: "Give the lab time to finish. Please wait 7 to 10 days after your visit before you call." },
+  { n: "2", t: "Call the toll-free number", d: `Dial ${papResults.tollFree}. This is a service from ${papResults.lab}.` },
+  { n: "3", t: "Follow the prompts", d: "Listen to the phone menu and choose the option for your results." },
+];
+---
+
+<BaseLayout title="Pap Smear Results | Martin, Lee & Page OB GYN" description="How to get your Pap smear results from Martin, Lee & Page OB GYN in Memphis, TN. Normal results by phone, 7 to 10 days after your visit.">
+  <section class="relative overflow-hidden bg-lagoon-900 py-20 text-white lg:py-28">
+    <div class="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-lotus-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <nav aria-label="Breadcrumb" class="text-sm text-lagoon-100/80">
+        <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span>
+        <a href="/patient-resources" class="hover:text-white">Patient Resources</a> <span aria-hidden="true">/</span>
+        <span class="text-white">Pap Smear Results</span>
+      </nav>
+      <p class="eyebrow mt-8 !text-lotus-200">Patient Resources</p>
+      <h1 class="mt-4 max-w-3xl text-5xl leading-tight sm:text-6xl">Your Pap smear <em class="font-display text-lotus-300">results</em></h1>
+      <p class="mt-6 max-w-2xl text-lg text-lagoon-100/90">Here is how you will hear from us, and how to check your results by phone.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-6 lg:grid-cols-2">
+      <Reveal client:visible className="h-full">
+        <div class="h-full rounded-3xl bg-lotus-50 p-8 sm:p-10">
+          <span class="grid h-14 w-14 place-items-center rounded-full bg-white text-lotus-600"><Icon name="heart" class="h-7 w-7" /></span>
+          <h2 class="mt-6 text-3xl text-lagoon-900">If your results are abnormal</h2>
+          <p class="mt-4 text-lg text-ink-soft">Our office will contact you directly. You do not need to call the toll-free number. If you have questions, call us at <a href={site.phoneHref} class="font-bold text-lagoon-700 hover:text-lotus-600">{site.phone}</a>.</p>
+        </div>
+      </Reveal>
+      <Reveal client:visible delay={0.1} className="h-full">
+        <div class="h-full rounded-3xl bg-lagoon-50 p-8 sm:p-10">
+          <span class="grid h-14 w-14 place-items-center rounded-full bg-white text-lagoon-700"><Icon name="check" class="h-7 w-7" /></span>
+          <h2 class="mt-6 text-3xl text-lagoon-900">If your results are normal</h2>
+          <p class="mt-4 text-lg text-ink-soft">You can get them by phone, any time, using our toll-free results line.</p>
+          <a href={papResults.tollFreeHref} class="btn btn-primary btn-beam mt-7"><Icon name="phone" class="h-4 w-4" /> {papResults.tollFree}</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="bg-lagoon-900 py-16 text-white lg:py-24">
+    <div class="wrap">
+      <Reveal client:visible className="mx-auto max-w-2xl text-center">
+        <p class="eyebrow !text-lotus-200">Checking by phone</p>
+        <h2 class="mt-4 text-4xl sm:text-5xl">Three <em class="font-display text-lotus-300">simple steps</em></h2>
+      </Reveal>
+      <ol class="mt-14 grid gap-6 md:grid-cols-3">
+        {steps.map((s, i) => (
+          <li>
+            <Reveal client:visible delay={i * 0.1} className="h-full">
+              <div class="h-full rounded-3xl border border-white/15 bg-white/5 p-8">
+                <span class="grid h-12 w-12 place-items-center rounded-full bg-lotus-500 font-display text-2xl">{s.n}</span>
+                <h3 class="mt-5 text-2xl">{s.t}</h3>
+                <p class="mt-3 text-lagoon-100/85">{s.d}</p>
+              </div>
+            </Reveal>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Contact />
+</BaseLayout>

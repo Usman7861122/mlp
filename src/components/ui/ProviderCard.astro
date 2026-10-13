@@ -1,0 +1,23 @@
+---
+import type { Provider } from "../../data/providers";
+import ProviderPortrait from "./ProviderPortrait.astro";
+import Icon from "./Icon.astro";
+interface Props {
+  provider: Provider;
+  compact?: boolean;
+}
+const { provider: p, compact = false } = Astro.props;
+---
+
+<a
+  href={`/providers/${p.slug}`}
+  class="group block rounded-3xl text-center focus-visible:outline-offset-8"
+  aria-label={`View profile: ${p.name}, ${p.title}`}
+>
+  <ProviderPortrait provider={p} class={compact ? "mx-auto max-w-[13rem]" : "mx-auto max-w-xs"} />
+  <h3 class={compact ? "mt-4 text-lg leading-snug text-lagoon-900" : "mt-6 text-2xl text-lagoon-900"}>{p.name}<span class="text-lagoon-600">, {p.title}</span></h3>
+  <p class={compact ? "mt-1 text-sm text-ink-soft" : "mt-1 text-ink-soft"}>{p.role}</p>
+  {!compact && <span class="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-lotus-600 transition-all duration-300 group-hover:gap-2.5">
+    View profile <Icon name="arrowRight" class="h-4 w-4" />
+  </span>}
+</a>

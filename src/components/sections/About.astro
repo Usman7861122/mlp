@@ -1,0 +1,113 @@
+---
+import { site } from "../../data/site";
+import Reveal from "../islands/Reveal";
+import Icon from "../ui/Icon.astro";
+---
+
+<section id="about" class="section overflow-hidden bg-ivory">
+  <div class="wrap grid items-center gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-16 xl:gap-20">
+    <Reveal client:visible>
+      <div class="relative mx-auto max-w-xl lg:max-w-none">
+        <div class="absolute -left-4 -top-4 h-full w-full rounded-[2rem] border border-lotus-200 sm:-left-6 sm:-top-6" aria-hidden="true"></div>
+        <!--
+          VIDEO BOX (square, silent). Files:
+            /public/videos/about-ultrasound.webm  (used first, smaller)
+            /public/videos/about-ultrasound.mp4   (fallback for Safari)
+            /public/images/about-ultrasound-poster.jpg  (shown while loading)
+          Original Higgsfield file is kept in /source-assets/ (not published).
+        -->
+        <div class="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-lagoon-900 shadow-2xl shadow-lagoon-900/15" data-about-video-box>
+          <video
+            class="absolute inset-0 h-full w-full object-cover"
+            poster="/images/about-ultrasound-poster.jpg"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-label="An expecting mother smiling during an ultrasound visit"
+            data-about-video>
+            <source src="/videos/about-ultrasound.webm" type="video/webm" />
+            <source src="/videos/about-ultrasound.mp4" type="video/mp4" />
+          </video>
+          <button
+            type="button"
+            hidden
+            data-about-toggle
+            aria-label="Pause video"
+            class="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/85 text-lagoon-900 shadow-lg backdrop-blur transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lotus-600">
+            <span data-icon-pause><Icon name="pause" class="h-5 w-5" /></span>
+            <span data-icon-play hidden><Icon name="play" class="h-5 w-5" /></span>
+          </button>
+        </div>
+        <a
+          href={site.googleProfile}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${site.rating.score} out of 5 from ${site.rating.count} patient reviews. Open our Google profile (opens in a new tab)`}
+          class="group/rating absolute -bottom-6 right-0 flex items-center gap-4 rounded-2xl bg-white p-4 pr-6 shadow-xl shadow-lagoon-900/10 transition duration-300 hover:-translate-y-1 hover:shadow-2xl focus-visible:-translate-y-1 sm:-right-6">
+          <span class="grid h-12 w-12 place-items-center rounded-full bg-lotus-100 text-lotus-600">
+            <Icon name="star" class="h-6 w-6" />
+          </span>
+          <div>
+            <p class="font-display text-2xl leading-none text-lagoon-900">{site.rating.score} <span class="text-base text-ink-soft">/ 5</span></p>
+            <p class="mt-1 text-sm text-ink-soft group-hover/rating:text-lotus-600">{site.rating.count} patient reviews</p>
+          </div>
+        </a>
+      </div>
+    </Reveal>
+
+    <Reveal client:visible delay={0.15}>
+      <p class="eyebrow">About Our Practice</p>
+      <h2 class="mt-4 text-4xl text-lagoon-900 sm:text-5xl">
+        Women's health care that <em class="font-display text-lotus-600">listens first.</em>
+      </h2>
+      <div class="mt-7 space-y-5 text-lg text-ink-soft">
+        <p>
+          Martin, Lee &amp; Page OB GYN is a Memphis practice built on one simple idea: every woman deserves time, respect and clear answers.
+        </p>
+        <p>
+          From your first prenatal visit to menopause and beyond, our physicians and advanced practitioners care for you at every stage of life, in a warm and private setting.
+        </p>
+      </div>
+      <ul class="mt-8 grid gap-3 text-ink sm:grid-cols-2">
+        {["Voted Best Women's Clinic in Memphis, 2018 – 2021", "Board-certified OB-GYNs (FACOG)", "Obstetrics and gynecology under one roof", "Most major insurance plans accepted"].map((t) => (
+          <li class="flex gap-3">
+            <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-lagoon-100 text-lagoon-700">
+              <Icon name="check" class="h-3.5 w-3.5" />
+            </span>
+            {t}
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/about" class="btn btn-primary">Our Story <Icon name="arrowRight" class="h-4 w-4" /></a>
+        <a href="/providers" class="btn btn-outline">Meet the Team <Icon name="arrowRight" class="h-4 w-4" /></a>
+      </div>
+    </Reveal>
+  </div>
+</section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>("[data-about-video]");
+  const btn = document.querySelector<HTMLButtonElement>("[data-about-toggle]");
+  if (video && btn) {
+    const iconPause = btn.querySelector<HTMLElement>("[data-icon-pause]")!;
+    const iconPlay = btn.querySelector<HTMLElement>("[data-icon-play]")!;
+    const sync = () => {
+      const paused = video.paused;
+      iconPause.hidden = paused;
+      iconPlay.hidden = !paused;
+      btn.setAttribute("aria-label", paused ? "Play video" : "Pause video");
+    };
+    // Show the button only when a video file really loads.
+    video.addEventListener("loadeddata", () => {
+      btn.hidden = false;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) video.pause();
+      sync();
+    });
+    video.addEventListener("play", sync);
+    video.addEventListener("pause", sync);
+    btn.addEventListener("click", () => (video.paused ? video.play() : video.pause()));
+  }
+</script>
