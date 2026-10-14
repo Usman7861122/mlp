@@ -1,14 +1,22 @@
 ---
-import type { Provider } from "../../data/providers";
+import { physicians, type Provider } from "../../data/providers";
 interface Props {
   provider: Provider;
   class?: string;
   eager?: boolean;
 }
 const { provider: p, class: className = "", eager = false } = Astro.props;
+// The big MLP initial shows only for the three founding physicians (Martin, Lee, Page).
+const showLetter = physicians.some((d) => d.slug === p.slug);
 ---
 
 <div class={`relative aspect-[4/5] [container-type:inline-size] overflow-hidden rounded-t-[999px] rounded-b-[2rem] shadow-lg shadow-lagoon-900/10 ${p.shape} ${className}`}>
+  {showLetter && <span
+    aria-hidden="true"
+    class={`pointer-events-none absolute inset-x-0 top-[-2%] select-none text-center font-display text-[95cqw] font-semibold leading-none transition-transform duration-[900ms] ease-[var(--ease-luxe)] group-hover:scale-105 ${p.letterTone}`}
+  >
+    {p.letter}
+  </span>}
   <img
     src={p.cutout}
     alt={`${p.name}, ${p.title}`}
